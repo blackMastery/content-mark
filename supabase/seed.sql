@@ -1,0 +1,2 @@
+-- Editable content is seeded by `npm run db:seed`, which validates the existing
+-- TypeScript content and preserves records that already exist.

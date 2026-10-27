@@ -1,0 +1,48 @@
+{
+  "name": "content-mark",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --conditions=react-server --import tsx --test tests/*.test.ts",
+    "db:start": "node scripts/start-local.mjs",
+    "db:stop": "supabase stop",
+    "db:env": "node scripts/local-env.mjs",
+    "db:seed": "node --env-file=.env.local --import tsx scripts/seed-content.ts",
+    "admin:create": "node --env-file=.env.local scripts/create-admin.mjs",
+    "test:integration": "node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/integration/*.test.ts"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "latest",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.109.0",
+    "lucide-react": "latest",
+    "motion": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "latest",
+    "server-only": "^0.0.1",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "^22",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "^9",
+    "eslint-config-next": "latest",
+    "prettier": "^3.9.10",
+    "supabase": "^2.122.0",
+    "tailwindcss": "latest",
+    "tsx": "latest",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
