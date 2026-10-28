@@ -1,0 +1,65 @@
+{
+  "checkedAt": "2026-10-28T20:29:22.680Z",
+  "base": "http://127.0.0.1:3000",
+  "indexable": false,
+  "pages": [
+    {
+      "userAgent": "facebookexternalhit/1.1",
+      "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
+      "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
+      "image": "http://localhost:3000/opengraph-image?v=1",
+      "canonical": null,
+      "robots": "noindex, nofollow, noarchive, nosnippet",
+      "structuredDataNodes": 0
+    },
+    {
+      "userAgent": "Twitterbot/1.0",
+      "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
+      "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
+      "image": "http://localhost:3000/opengraph-image?v=1",
+      "canonical": null,
+      "robots": "noindex, nofollow, noarchive, nosnippet",
+      "structuredDataNodes": 0
+    },
+    {
+      "userAgent": "Googlebot",
+      "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
+      "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
+      "image": "http://localhost:3000/opengraph-image?v=1",
+      "canonical": null,
+      "robots": "noindex, nofollow, noarchive, nosnippet",
+      "structuredDataNodes": 0
+    },
+    {
+      "userAgent": "Mozilla/5.0",
+      "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
+      "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
+      "image": "http://localhost:3000/opengraph-image?v=1",
+      "canonical": null,
+      "robots": "noindex, nofollow, noarchive, nosnippet",
+      "structuredDataNodes": 0
+    }
+  ],
+  "images": [
+    {
+      "path": "/opengraph-image?v=1",
+      "width": 1200,
+      "height": 630,
+      "bytes": 65956
+    },
+    {
+      "path": "/icon",
+      "width": 64,
+      "height": 64,
+      "bytes": 6703
+    },
+    {
+      "path": "/apple-icon",
+      "width": 180,
+      "height": 180,
+      "bytes": 40657
+    }
+  ],
+  "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\n\n",
+  "sitemap": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n</urlset>\n"
+}

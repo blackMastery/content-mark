@@ -65,7 +65,10 @@ export function Work({
                     <ArrowUpRight size={18} />
                   </span>
                 </div>
-                <div className="project-mockup" aria-hidden={!project.imageUrl || undefined}>
+                <div
+                  className="project-mockup"
+                  aria-hidden={!project.imageUrl || undefined}
+                >
                   {project.imageUrl ? (
                     <Image
                       className="project-cover"
@@ -120,7 +123,10 @@ export function Work({
             {selected.category}
           </span>
           <h2 id="project-dialog-title">{selected.title}</h2>
-          <div className="dialog-mockup" aria-hidden={!selected.imageUrl || undefined}>
+          <div
+            className="dialog-mockup"
+            aria-hidden={!selected.imageUrl || undefined}
+          >
             {selected.imageUrl ? (
               <Image
                 className="project-cover"

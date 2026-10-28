@@ -1,3 +1,5 @@
+import { siteConfiguration } from "./site-config";
+
 export const navigation = [
   { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
@@ -29,5 +31,3 @@ export const serviceOptions = [
   "Founding Client Offer",
   "Let's discuss",
 ] as const;
-import { siteConfiguration } from "./site-config";
-

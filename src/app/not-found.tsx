@@ -9,10 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  return <main id="main" className="site-unavailable">
-    <span className="eyebrow">CONTENT MARK / 404</span>
-    <h1>This page couldn&apos;t be found.</h1>
-    <p>Let&apos;s get you back to a little more possibility.</p>
-    <Link className="button" href="/">Return to Content Mark</Link>
-  </main>;
+  return (
+    <main id="main" className="site-unavailable">
+      <span className="eyebrow">CONTENT MARK / 404</span>
+      <h1>This page couldn&apos;t be found.</h1>
+      <p>Let&apos;s get you back to a little more possibility.</p>
+      <Link className="button" href="/">
+        Return to Content Mark
+      </Link>
+    </main>
+  );
 }

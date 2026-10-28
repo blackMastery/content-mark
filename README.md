@@ -2,6 +2,8 @@
 
 The Supabase-backed admin panel, local Docker setup, login details, and publishing workflow are documented in [ADMIN.md](./ADMIN.md).
 
+Search metadata, canonical URLs, indexing controls, share images, structured data, domain setup, and crawler verification are documented in [SEO.md](./SEO.md).
+
 A complete, responsive agency landing page built with Next.js App Router, TypeScript, Tailwind CSS, Motion, Lucide, React Hook Form, and Zod. Custom mockups are inline SVG and CSS; there are no remote image dependencies, invented outcomes, or client testimonials. The three portfolio entries are explicitly labeled design concepts.
 
 ## Run locally

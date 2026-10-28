@@ -6,7 +6,12 @@ import { siteDocumentSchema } from "./schema";
 import { supabaseConfigured, supabaseConfig } from "@/lib/supabase/config";
 
 export const getPublishedSite = cache(async () => {
-  if (!supabaseConfigured()) return { document: defaultSiteDocument, revision: 0, publishedAt: undefined };
+  if (!supabaseConfigured())
+    return {
+      document: defaultSiteDocument,
+      revision: 0,
+      publishedAt: undefined,
+    };
   const { url, key } = supabaseConfig();
   const client = createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -35,4 +40,6 @@ export const getPublishedSite = cache(async () => {
   };
 });
 
-export const getSiteDocument = cache(async () => (await getPublishedSite()).document);
+export const getSiteDocument = cache(
+  async () => (await getPublishedSite()).document,
+);

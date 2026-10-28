@@ -11,8 +11,15 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const { document, publishedAt } = await getPublishedSite();
   const schema = siteStructuredData(document, undefined, publishedAt);
-  return <>
-    {schema ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }} /> : null}
-    <SiteView site={document} />
-  </>;
+  return (
+    <>
+      {schema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
+        />
+      ) : null}
+      <SiteView site={document} />
+    </>
+  );
 }

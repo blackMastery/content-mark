@@ -18,7 +18,12 @@ const config: NextConfig = {
       },
       ...["/admin/:path*", "/api/:path*"].map((source) => ({
         source,
-        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive, nosnippet" }],
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet",
+          },
+        ],
       })),
     ];
   },

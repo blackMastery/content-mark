@@ -14,8 +14,10 @@ export function publicSitemap(
   publishedAt?: string,
 ): MetadataRoute.Sitemap {
   if (!config.indexable) return [];
-  return [{
-    url: `${config.origin}/`,
-    ...(publishedAt ? { lastModified: publishedAt } : {}),
-  }];
+  return [
+    {
+      url: `${config.origin}/`,
+      ...(publishedAt ? { lastModified: publishedAt } : {}),
+    },
+  ];
 }

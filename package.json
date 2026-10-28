@@ -8,6 +8,7 @@
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "seo:check": "node --env-file-if-exists=.env.local --import tsx scripts/check-seo.mjs",
     "test": "node --conditions=react-server --import tsx --test tests/*.test.ts",
     "db:start": "node scripts/start-local.mjs",
     "db:stop": "supabase stop",
