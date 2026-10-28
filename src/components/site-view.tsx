@@ -9,7 +9,6 @@ import { Work } from "@/components/sections/work";
 import { LaunchOffer, Pricing } from "@/components/sections/pricing";
 import { FAQ } from "@/components/sections/faq";
 import { Contact } from "@/components/sections/contact";
-import { getSiteUrl } from "@/lib/constants";
 import { getServiceOptions } from "@/lib/cms/options";
 import type { SiteDocument } from "@/lib/cms/schema";
 
@@ -20,19 +19,6 @@ export function SiteView({
   site: SiteDocument;
   preview?: boolean;
 }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: "Content Mark",
-    slogan: "YOUR INTERNET AWARENESS COMPONENT",
-    description: site.settings.seoDescription,
-    areaServed: { "@type": "Country", name: "Guyana" },
-    sameAs: [
-      site.settings.facebookUrl,
-      ...(site.settings.instagramUrl ? [site.settings.instagramUrl] : []),
-    ],
-    ...(process.env.NEXT_PUBLIC_SITE_URL ? { url: getSiteUrl() } : {}),
-  };
   return (
     <div className={preview ? "site-preview" : undefined}>
       {preview ? (
@@ -41,12 +27,6 @@ export function SiteView({
           <Link href="/admin/content">Return to the editor ↗</Link>
         </div>
       ) : null}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
       <Navigation />
       <main id="main">
         <Hero hero={site.hero} />

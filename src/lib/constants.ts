@@ -9,8 +9,7 @@ export const navigation = [
 export const facebookUrl =
   "https://www.facebook.com/profile.php?id=100068946408361";
 export function getSiteUrl() {
-  const configured = process.env.NEXT_PUBLIC_SITE_URL;
-  return configured ? new URL(configured).origin : "http://localhost:3000";
+  return siteConfiguration().origin;
 }
 export function getWhatsAppUrl(configuredNumber?: string) {
   const number = (
@@ -30,3 +29,5 @@ export const serviceOptions = [
   "Founding Client Offer",
   "Let's discuss",
 ] as const;
+import { siteConfiguration } from "./site-config";
+

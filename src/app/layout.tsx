@@ -12,36 +12,14 @@ const space = Space_Grotesk({
   variable: "--font-space",
   display: "swap",
 });
-const title = "Content Mark — Websites, Advertising & Digital Growth in Guyana";
-const description =
-  "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.";
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title,
-  description,
-  alternates: { canonical: "/" },
-  openGraph: {
-    title,
-    description,
-    locale: "en_GY",
-    type: "website",
-    siteName: "Content Mark",
-    url: "/",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Content Mark. We build. We promote. You grow.",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: ["/opengraph-image"],
-  },
+  applicationName: "Content Mark",
+  title: "Content Mark",
+  creator: "Content Mark",
+  publisher: "Content Mark",
+  // Only the public home page explicitly opts into indexing and sharing metadata.
+  robots: { index: false, follow: false },
 };
 export const viewport: Viewport = {
   themeColor: "#080D0C",
@@ -52,7 +30,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en-GY" data-scroll-behavior="smooth">
       <body className={`${inter.variable} ${space.variable}`}>
         <a className="skip-link" href="#main">
           Skip to content

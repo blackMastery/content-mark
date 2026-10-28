@@ -1,8 +1,6 @@
 import type { MetadataRoute } from "next";
-import { getSiteUrl } from "@/lib/constants";
+import { siteConfiguration } from "@/lib/site-config";
+import { crawlerRules } from "@/lib/seo/crawlers";
 export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: { userAgent: "*", allow: "/", disallow: ["/api/", "/admin/"] },
-    sitemap: `${getSiteUrl()}/sitemap.xml`,
-  };
+  return crawlerRules(siteConfiguration());
 }

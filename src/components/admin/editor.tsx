@@ -831,12 +831,15 @@ export function ContentEditor({
                   "Page title",
                   ["settings", "seoTitle"],
                   document.settings.seoTitle,
+                  false,
+                  `${document.settings.seoTitle.length} characters. Aim for a clear, specific title around 50–60 characters; search engines may rewrite it.`,
                 )}
                 {field(
                   "Meta description",
                   ["settings", "seoDescription"],
                   document.settings.seoDescription,
                   true,
+                  `${document.settings.seoDescription.length} characters. Aim for a useful summary around 140–160 characters; display length varies.`,
                 )}
               </div>
             </div>

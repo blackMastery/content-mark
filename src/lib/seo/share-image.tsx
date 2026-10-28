@@ -1,10 +1,15 @@
 import { ImageResponse } from "next/og";
 import { getBrandArtwork } from "@/lib/brand-artwork";
-export const alt = "Content Mark — We build. We promote. You grow.";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-export default async function Image() {
+import type { SiteDocument } from "@/lib/cms/schema";
+
+const size = { width: 1200, height: 630 };
+
+export async function createShareImage(site: SiteDocument) {
   const artwork = await getBrandArtwork();
+  // Keep administrator-edited headlines inside the card, including unusually long lines.
+  const lines = site.hero.headline.map((line) => line.length > 42 ? `${line.slice(0, 41).trimEnd()}…` : line);
+  const longest = Math.max(...lines.map((line) => line.length));
+  const fontSize = Math.min(99, Math.floor(1470 / longest));
   return new ImageResponse(
     <div
       style={{
@@ -63,7 +68,7 @@ export default async function Image() {
           </div>
         </div>
         <span style={{ color: "#45E5A4", fontSize: 17 }}>
-          GUYANA&apos;S DIGITAL GROWTH PARTNER
+          BASED IN GUYANA
         </span>
       </div>
       <div
@@ -71,19 +76,17 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           fontWeight: 800,
-          fontSize: 99,
-          lineHeight: 1,
-          letterSpacing: -5,
+          fontSize,
+          lineHeight: 1.12,
+          letterSpacing: -fontSize * 0.04,
         }}
       >
-        <span>WE BUILD.</span>
-        <span>WE PROMOTE.</span>
-        <span style={{ color: "#45E5A4" }}>YOU GROW. ↗</span>
+        {lines.map((line, index) => <span key={index} style={{ color: index === 2 ? "#45E5A4" : "#F7FAF8" }}>{line}</span>)}
       </div>
       <div style={{ display: "flex", fontSize: 18, color: "#9BAFA5" }}>
         WEBSITE DEVELOPMENT / DIGITAL ADVERTISING / LEAD GENERATION
       </div>
     </div>,
-    { ...size },
+    { ...size, headers: { "Cache-Control": "public, max-age=300, s-maxage=300" } },
   );
 }

@@ -1,22 +1,18 @@
 import type { Metadata } from "next";
 import { SiteView } from "@/components/site-view";
-import { getSiteDocument } from "@/lib/cms/content";
+import { getPublishedSite } from "@/lib/cms/content";
+import { homeMetadata } from "@/lib/seo/metadata";
+import { siteStructuredData, serializeJsonLd } from "@/lib/seo/structured-data";
 export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSiteDocument();
-  return {
-    title: site.settings.seoTitle,
-    description: site.settings.seoDescription,
-    openGraph: {
-      title: site.settings.seoTitle,
-      description: site.settings.seoDescription,
-    },
-    twitter: {
-      title: site.settings.seoTitle,
-      description: site.settings.seoDescription,
-    },
-  };
+  const { document, revision } = await getPublishedSite();
+  return homeMetadata(document, revision);
 }
 export default async function Home() {
-  return <SiteView site={await getSiteDocument()} />;
+  const { document, publishedAt } = await getPublishedSite();
+  const schema = siteStructuredData(document, undefined, publishedAt);
+  return <>
+    {schema ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }} /> : null}
+    <SiteView site={document} />
+  </>;
 }

@@ -34,8 +34,8 @@ export function Hero({ hero }: { hero: SiteDocument["hero"] }) {
         <div className="hero-main">
           <div className="hero-copy">
             <h1>
-              <HeroLine delay={0.08}>{hero.headline[0]}</HeroLine>
-              <HeroLine delay={0.19}>{hero.headline[1]}</HeroLine>
+              <HeroLine delay={0.08}>{hero.headline[0]}</HeroLine>{" "}
+              <HeroLine delay={0.19}>{hero.headline[1]}</HeroLine>{" "}
               <HeroLine delay={0.3} className="text-mint">
                 {hero.headline[2]}
                 <ArrowUpRight className="headline-arrow" strokeWidth={1.4} />

@@ -65,12 +65,12 @@ export function Work({
                     <ArrowUpRight size={18} />
                   </span>
                 </div>
-                <div className="project-mockup" aria-hidden="true">
+                <div className="project-mockup" aria-hidden={!project.imageUrl || undefined}>
                   {project.imageUrl ? (
                     <Image
                       className="project-cover"
                       src={project.imageUrl}
-                      alt=""
+                      alt={`${project.name} — ${project.isConcept ? "concept design" : "project"}: ${project.title}`}
                       width={1200}
                       height={800}
                       unoptimized
@@ -120,12 +120,12 @@ export function Work({
             {selected.category}
           </span>
           <h2 id="project-dialog-title">{selected.title}</h2>
-          <div className="dialog-mockup" aria-hidden="true">
+          <div className="dialog-mockup" aria-hidden={!selected.imageUrl || undefined}>
             {selected.imageUrl ? (
               <Image
                 className="project-cover"
                 src={selected.imageUrl}
-                alt=""
+                alt={`${selected.name} — ${selected.isConcept ? "concept design" : "project"}: ${selected.title}`}
                 width={1200}
                 height={800}
                 unoptimized

@@ -1,5 +1,13 @@
 import type { MetadataRoute } from "next";
-import { getSiteUrl } from "@/lib/constants";
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: getSiteUrl(), changeFrequency: "monthly", priority: 1 }];
+import { siteConfiguration } from "@/lib/site-config";
+import { getPublishedSite } from "@/lib/cms/content";
+import { publicSitemap } from "@/lib/seo/crawlers";
+
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const config = siteConfiguration();
+  if (!config.indexable) return [];
+  const { publishedAt } = await getPublishedSite();
+  return publicSitemap(config, publishedAt);
 }
