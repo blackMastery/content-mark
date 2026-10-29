@@ -1,13 +1,7 @@
 import { siteConfiguration } from "./site-config";
+import { sitePages } from "./site-pages";
 
-export const navigation = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Our Process", href: "#process" },
-  { label: "Work", href: "#work" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
-];
+export const navigation = sitePages.filter((page) => page.key !== "faqs");
 export const facebookUrl =
   "https://www.facebook.com/profile.php?id=100068946408361";
 export function getSiteUrl() {

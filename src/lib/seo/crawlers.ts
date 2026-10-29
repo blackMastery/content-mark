@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import type { SiteConfiguration } from "@/lib/site-config";
+import { sitePages } from "@/lib/site-pages";
 
 export function crawlerRules(config: SiteConfiguration): MetadataRoute.Robots {
   return {
@@ -14,10 +15,8 @@ export function publicSitemap(
   publishedAt?: string,
 ): MetadataRoute.Sitemap {
   if (!config.indexable) return [];
-  return [
-    {
-      url: `${config.origin}/`,
-      ...(publishedAt ? { lastModified: publishedAt } : {}),
-    },
-  ];
+  return sitePages.map((page) => ({
+    url: `${config.origin}${page.path}`,
+    ...(publishedAt ? { lastModified: publishedAt } : {}),
+  }));
 }

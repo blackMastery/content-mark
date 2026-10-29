@@ -15,17 +15,20 @@ const icons = [Compass, Layers3, Rocket, SlidersHorizontal];
 export function Process({
   steps,
   copy,
+  headingAs = "h2",
 }: {
   steps: SiteDocument["steps"];
   copy: SectionCopy;
+  headingAs?: "h1" | "h2";
 }) {
+  const CardHeading = headingAs === "h1" ? "h2" : "h3";
   const [active, setActive] = useState(0);
   const reduced = useReducedMotion();
   const Icon = icons[active];
   return (
     <section id="process" className="section process-section">
       <div className="container">
-        <SectionHeading copy={copy} />
+        <SectionHeading copy={copy} headingAs={headingAs} />
         <div
           className="process-tabs"
           role="tablist"
@@ -62,10 +65,10 @@ export function Process({
                 <span>0{i + 1}</span>
                 <i />
               </span>
-              <h3>
+              <CardHeading>
                 {step.title}
                 <ArrowUpRight size={19} />
-              </h3>
+              </CardHeading>
               <p>{step.description}</p>
             </button>
           ))}

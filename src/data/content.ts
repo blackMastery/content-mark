@@ -92,35 +92,7 @@ export const steps = [
     tags: ["Clear reporting", "Refinements", "Next steps"],
   },
 ];
-export const projects = [
-  {
-    id: "automotive",
-    category: "AUTOMOTIVE / CAR RENTAL",
-    title: "A better way to get moving.",
-    description:
-      "A confident rental experience with a browsable vehicle collection and a direct path to an inquiry.",
-    name: "Automotive website concept",
-    theme: "auto",
-  },
-  {
-    id: "property",
-    category: "REAL ESTATE / PROPERTY",
-    title: "A place to call your own.",
-    description:
-      "Thoughtful property discovery, clear listing details, and simple viewing requests.",
-    name: "Property website concept",
-    theme: "property",
-  },
-  {
-    id: "retail",
-    category: "RETAIL / ECOMMERCE",
-    title: "Good things. Great experiences.",
-    description:
-      "A considered online store that brings product discovery and a seamless shopping journey together.",
-    name: "Ecommerce website concept",
-    theme: "retail",
-  },
-] as const;
+export { portfolioProjects as projects } from "./portfolio";
 export const pricing = [
   {
     name: "Digital Starter",

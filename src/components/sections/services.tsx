@@ -3,17 +3,24 @@ import type { SiteDocument, SectionCopy } from "@/lib/cms/schema";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/animations/reveal";
 import { AdMockup, LeadFlow, PropertyMockup } from "@/components/ui/mockups";
+import Link from "next/link";
+import { pageHref } from "@/lib/site-pages";
 export function Services({
   services,
   copy,
+  preview = false,
+  headingAs = "h2",
 }: {
   services: SiteDocument["services"];
   copy: SectionCopy;
+  preview?: boolean;
+  headingAs?: "h1" | "h2";
 }) {
+  const CardHeading = headingAs === "h1" ? "h2" : "h3";
   return (
     <section id="services" className="section services-section">
       <div className="container">
-        <SectionHeading copy={copy} />
+        <SectionHeading copy={copy} headingAs={headingAs} />
         <div className="services-grid">
           {services.map((service, index) => (
             <Reveal
@@ -36,7 +43,7 @@ export function Services({
                 )}
               </div>
               <div className="service-copy">
-                <h3>{service.headline}</h3>
+                <CardHeading>{service.headline}</CardHeading>
                 <p>{service.description}</p>
                 <ul>
                   {service.features.map((feature) => (
@@ -46,8 +53,10 @@ export function Services({
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={`?service=${encodeURIComponent(service.title)}#contact`}
+                <Link
+                  href={pageHref("contact", preview, {
+                    service: service.title,
+                  })}
                   className="service-link"
                 >
                   Let&apos;s talk{" "}
@@ -57,7 +66,7 @@ export function Services({
                       ? "advertising"
                       : "opportunities"}
                   <ArrowUpRight size={16} />
-                </a>
+                </Link>
               </div>
             </Reveal>
           ))}

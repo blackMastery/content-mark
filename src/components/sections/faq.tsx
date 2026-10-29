@@ -1,12 +1,18 @@
 import { ArrowUpRight, Plus } from "lucide-react";
 import type { SiteDocument, SectionCopy } from "@/lib/cms/schema";
 import { Reveal } from "@/components/animations/reveal";
+import Link from "next/link";
+import { pageHref } from "@/lib/site-pages";
 export function FAQ({
   faqs,
   copy,
+  headingAs: Heading = "h2",
+  preview = false,
 }: {
   faqs: SiteDocument["faqs"];
   copy: SectionCopy;
+  headingAs?: "h1" | "h2";
+  preview?: boolean;
 }) {
   return (
     <section id="faq" className="section faq-section">
@@ -15,15 +21,15 @@ export function FAQ({
           <span className="eyebrow">
             <span className="section-mark" /> {copy.eyebrow}
           </span>
-          <h2>
+          <Heading>
             <span className="cms-lines">{copy.title}</span>
             <br />
             <span className="text-muted cms-lines">{copy.accent}</span>
-          </h2>
+          </Heading>
           <p>{copy.description}</p>
-          <a href="#contact" className="text-button">
+          <Link href={pageHref("contact", preview)} className="text-button">
             Have something else in mind? <ArrowUpRight size={17} />
-          </a>
+          </Link>
         </Reveal>
         <Reveal className="faq-list">
           {faqs.map((faq, i) => (

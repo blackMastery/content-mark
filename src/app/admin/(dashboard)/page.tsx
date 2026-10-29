@@ -60,7 +60,9 @@ export default async function OverviewPage() {
     {
       label: "Published projects",
       value: content.projects.length,
-      detail: `${content.projects.filter((p) => p.isConcept).length} clearly labeled concepts`,
+      detail: content.projects.some((p) => p.isConcept)
+        ? `${content.projects.filter((p) => p.isConcept).length} clearly labeled concepts`
+        : "Website development portfolio",
       icon: Images,
       href: "/admin/projects",
     },
@@ -156,7 +158,7 @@ export default async function OverviewPage() {
                 here. Keep track of every next step.
               </p>
               <Link
-                href="/#contact"
+                href="/contact"
                 target="_blank"
                 className="admin-inline-link"
               >

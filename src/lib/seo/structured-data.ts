@@ -1,5 +1,7 @@
 import type { SiteDocument } from "@/lib/cms/schema";
 import { siteConfiguration, type SiteConfiguration } from "@/lib/site-config";
+import { getSitePage, type SitePageKey } from "@/lib/site-pages";
+import { pageSearchCopy } from "./metadata";
 
 type SchemaNode = Record<string, unknown> & { "@type": string; "@id": string };
 
@@ -7,12 +9,15 @@ export function siteStructuredData(
   site: SiteDocument,
   config: SiteConfiguration = siteConfiguration(),
   publishedAt?: string,
+  page: SitePageKey = "home",
 ) {
   if (!config.canonicalUrl) return null;
   const url = config.canonicalUrl;
   const organization = `${url}#organization`;
   const website = `${url}#website`;
-  const webpage = `${url}#webpage`;
+  const pageUrl = `${config.origin}${getSitePage(page).path}`;
+  const webpage = `${pageUrl}#webpage`;
+  const searchCopy = pageSearchCopy(site, page);
   const country = { "@type": "Country", name: "Guyana" };
   const services: SchemaNode[] = site.services.map((service) => ({
     "@type": "Service",
@@ -20,7 +25,7 @@ export function siteStructuredData(
     name: service.title,
     serviceType: service.title,
     description: service.description,
-    url: `${url}#services`,
+    url: `${config.origin}/services`,
     provider: { "@id": organization },
     areaServed: country,
   }));
@@ -50,7 +55,7 @@ export function siteStructuredData(
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "sales",
-        url: `${url}#contact`,
+        url: `${config.origin}/contact`,
         availableLanguage: "English",
       },
     },
@@ -63,19 +68,43 @@ export function siteStructuredData(
       publisher: { "@id": organization },
     },
     {
-      "@type": "WebPage",
+      "@type":
+        page === "contact"
+          ? "ContactPage"
+          : page === "portfolio"
+            ? "CollectionPage"
+            : "WebPage",
       "@id": webpage,
-      url,
-      name: site.settings.seoTitle,
-      description: site.settings.seoDescription,
+      url: pageUrl,
+      name: searchCopy.title,
+      description: searchCopy.description,
       inLanguage: "en-GY",
       isPartOf: { "@id": website },
       about: { "@id": organization },
-      mainEntity: services.map((service) => ({ "@id": service["@id"] })),
+      ...(["home", "services"].includes(page)
+        ? { mainEntity: services.map((service) => ({ "@id": service["@id"] })) }
+        : {}),
+      ...(page !== "home"
+        ? { breadcrumb: { "@id": `${pageUrl}#breadcrumbs` } }
+        : {}),
       ...(publishedAt ? { dateModified: publishedAt } : {}),
     },
-    ...services,
+    ...(["home", "services"].includes(page) ? services : []),
   ];
+  if (page !== "home")
+    graph.push({
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}#breadcrumbs`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: url },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: getSitePage(page).label,
+          item: pageUrl,
+        },
+      ],
+    });
   return { "@context": "https://schema.org", "@graph": graph };
 }
 

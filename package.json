@@ -14,6 +14,7 @@
     "db:stop": "supabase stop",
     "db:env": "node scripts/local-env.mjs",
     "db:seed": "node --env-file=.env.local --import tsx scripts/seed-content.ts",
+    "portfolio:import": "node --env-file=.env.local --import tsx scripts/import-portfolio.ts",
     "admin:create": "node --env-file=.env.local scripts/create-admin.mjs",
     "test:integration": "node --env-file=.env.local --import tsx --test --test-concurrency=1 tests/integration/*.test.ts"
   },

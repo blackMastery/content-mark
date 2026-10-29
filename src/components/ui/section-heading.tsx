@@ -3,9 +3,11 @@ import { Reveal } from "@/components/animations/reveal";
 export function SectionHeading({
   copy,
   disclaimer,
+  headingAs: Heading = "h2",
 }: {
   copy: SectionCopy;
   disclaimer?: string;
+  headingAs?: "h1" | "h2";
 }) {
   return (
     <Reveal className="section-heading">
@@ -14,11 +16,11 @@ export function SectionHeading({
           <span className="section-mark" />
           {copy.eyebrow}
         </span>
-        <h2>
+        <Heading>
           <span className="cms-lines">{copy.title}</span>
           <br />
           <span className="text-muted cms-lines">{copy.accent}</span>
-        </h2>
+        </Heading>
       </div>
       {disclaimer ? (
         <div>

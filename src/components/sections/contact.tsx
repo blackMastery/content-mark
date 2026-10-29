@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -21,16 +22,21 @@ export function Contact({
   copy,
   settings,
   options: serviceOptions,
+  headingAs: Heading = "h2",
+  preview = false,
 }: {
   copy: SectionCopy;
   settings: SiteDocument["settings"];
   options: string[];
+  headingAs?: "h1" | "h2";
+  preview?: boolean;
 }) {
   const [result, setResult] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
   const [token, setToken] = useState("");
+  const params = useSearchParams();
   const whatsapp = getWhatsAppUrl(settings.whatsappNumber);
   const {
     register,
@@ -50,10 +56,14 @@ export function Contact({
     },
   });
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
     const selected = params.get("package") || params.get("service");
-    if (selected && serviceOptions.some((option) => option === selected))
-      setValue("service", selected as ContactValues["service"]);
+    setValue(
+      "service",
+      selected && serviceOptions.includes(selected) ? selected : "",
+    );
+  }, [params, setValue, serviceOptions]);
+  useEffect(() => {
+    if (preview) return;
     let active = true;
     fetch("/api/contact", { cache: "no-store" })
       .then((r) => r.json())
@@ -64,8 +74,9 @@ export function Contact({
     return () => {
       active = false;
     };
-  }, [setValue, serviceOptions]);
+  }, [preview]);
   async function submit(values: ContactValues) {
+    if (preview) return;
     setResult(null);
     try {
       const response = await fetch("/api/contact", {
@@ -113,12 +124,12 @@ export function Contact({
           <span className="eyebrow">
             <span className="live-dot" /> {copy.eyebrow}
           </span>
-          <h2>
+          <Heading>
             <span className="cms-lines">{copy.title}</span>
             <br />
             <span className="text-mint cms-lines">{copy.accent}</span>
             <ArrowUpRight strokeWidth={1} />
-          </h2>
+          </Heading>
           <p>{copy.description}</p>
           <div className="contact-location">
             <MapPin size={17} />
@@ -285,7 +296,7 @@ export function Contact({
             <button
               type="submit"
               className="button submit-button"
-              disabled={isSubmitting}
+              disabled={isSubmitting || preview}
             >
               {isSubmitting ? (
                 <>
@@ -299,6 +310,9 @@ export function Contact({
               )}
             </button>
             <p className="form-privacy">
+              {preview
+                ? "Private draft preview — inquiries can be sent from the published Contact page. "
+                : ""}
               By submitting, you agree that Content Mark may use these details
               to respond to your inquiry. No mailing lists. Just a conversation.
             </p>

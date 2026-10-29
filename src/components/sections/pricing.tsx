@@ -2,19 +2,26 @@ import { ArrowUpRight, Check, Sparkles } from "lucide-react";
 import type { SiteDocument, SectionCopy } from "@/lib/cms/schema";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/animations/reveal";
+import Link from "next/link";
+import { pageHref } from "@/lib/site-pages";
 export function Pricing({
   pricing,
   copy,
   disclaimer,
+  preview = false,
+  headingAs = "h2",
 }: {
   pricing: SiteDocument["pricing"];
   copy: SectionCopy;
   disclaimer: string;
+  preview?: boolean;
+  headingAs?: "h1" | "h2";
 }) {
+  const CardHeading = headingAs === "h1" ? "h2" : "h3";
   return (
     <section id="pricing" className="section pricing-section">
       <div className="container">
-        <SectionHeading copy={copy} />
+        <SectionHeading copy={copy} headingAs={headingAs} />
         <div className="pricing-grid">
           {pricing.map((plan, i) => (
             <Reveal
@@ -30,7 +37,7 @@ export function Pricing({
               ) : null}
               <div className="pricing-card-inner">
                 <span className="plan-index">0{i + 1} / THE PACKAGE</span>
-                <h3>{plan.name}</h3>
+                <CardHeading>{plan.name}</CardHeading>
                 <p className="plan-caption">{plan.caption}</p>
                 <div className="plan-price">
                   {plan.prefix ? (
@@ -40,12 +47,12 @@ export function Pricing({
                   <strong>{plan.price}</strong>
                   <span className="price-billing">{plan.billing}</span>
                 </div>
-                <a
-                  href={`?package=${encodeURIComponent(plan.name)}#contact`}
+                <Link
+                  href={pageHref("contact", preview, { package: plan.name })}
                   className={`button ${plan.featured ? "" : "button-outline"}`}
                 >
                   Choose {plan.name} <ArrowUpRight size={17} />
-                </a>
+                </Link>
                 <div className="plan-includes">WHAT&apos;S INCLUDED</div>
                 <ul>
                   {plan.features.map((feature) => (
@@ -65,7 +72,13 @@ export function Pricing({
     </section>
   );
 }
-export function LaunchOffer({ offer }: { offer: SiteDocument["promotion"] }) {
+export function LaunchOffer({
+  offer,
+  preview = false,
+}: {
+  offer: SiteDocument["promotion"];
+  preview?: boolean;
+}) {
   if (!offer.enabled) return null;
   return (
     <section className="offer-section">
@@ -103,12 +116,14 @@ export function LaunchOffer({ offer }: { offer: SiteDocument["promotion"] }) {
               </div>
               <span className="offer-badge cms-lines">{offer.badge}</span>
             </div>
-            <a
-              href="?package=Founding%20Client%20Offer#contact"
+            <Link
+              href={pageHref("contact", preview, {
+                package: "Founding Client Offer",
+              })}
               className="button button-gold"
             >
               {offer.cta} <ArrowUpRight size={17} />
-            </a>
+            </Link>
             <small>{offer.disclaimer}</small>
           </div>
         </div>

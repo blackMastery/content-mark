@@ -9,12 +9,16 @@ import {
 import type { SiteDocument, SectionCopy } from "@/lib/cms/schema";
 import { Reveal } from "@/components/animations/reveal";
 import { Brand } from "@/components/ui/brand";
+import Link from "next/link";
+import { pageHref } from "@/lib/site-pages";
 export function WhyContentMark({
   advantages,
   copy,
+  preview = false,
 }: {
   advantages: SiteDocument["advantages"];
   copy: SectionCopy;
+  preview?: boolean;
 }) {
   const icons = [ScanLine, Crosshair, MessageSquareText, MoveUpRight];
   return (
@@ -30,9 +34,9 @@ export function WhyContentMark({
             <span className="text-mint cms-lines">{copy.accent}</span>
           </h2>
           <p>{copy.description}</p>
-          <a href="#contact" className="text-button">
+          <Link href={pageHref("contact", preview)} className="text-button">
             Meet your next growth partner <ArrowUpRight size={18} />
-          </a>
+          </Link>
           <div className="strategy-art" aria-hidden="true">
             <div className="strategy-orbit" />
             <span className="strategy-node node-web">

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { inquiryStatuses, siteDocumentSchema } from "@/lib/cms/schema";
+import { isAllowedProjectImage } from "@/lib/cms/project-media";
 
 export async function signIn(_previous: { error: string }, form: FormData) {
   const credentials = z
@@ -61,14 +62,11 @@ export async function saveSiteDocument(
     };
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (
-    result.data.projects.some(
-      (p) =>
-        p.imageUrl &&
-        !p.imageUrl.startsWith(`${base}/storage/v1/object/public/site-media/`),
-    )
+    result.data.projects.some((p) => !isAllowedProjectImage(p.imageUrl, base))
   )
     return {
-      error: "Project images must be uploaded to this site's media storage.",
+      error:
+        "Use an imported portfolio preview or upload images to this site's media storage.",
     };
   const { data, error } = await client.rpc("save_site_document", {
     p_document: result.data,
@@ -82,7 +80,7 @@ export async function saveSiteDocument(
           ? "Another session has saved newer changes. Reload this page before editing further."
           : "Your changes couldn't be saved. Please try again.",
     };
-  if (publish) revalidatePath("/");
+  if (publish) revalidatePath("/", "layout");
   revalidatePath("/admin");
   return { revision: Number(data), savedAt: new Date().toISOString() };
 }

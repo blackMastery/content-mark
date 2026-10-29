@@ -4,7 +4,9 @@ The Supabase-backed admin panel, local Docker setup, login details, and publishi
 
 Search metadata, canonical URLs, indexing controls, share images, structured data, domain setup, and crawler verification are documented in [SEO.md](./SEO.md).
 
-A complete, responsive agency landing page built with Next.js App Router, TypeScript, Tailwind CSS, Motion, Lucide, React Hook Form, and Zod. Custom mockups are inline SVG and CSS; there are no remote image dependencies, invented outcomes, or client testimonials. The three portfolio entries are explicitly labeled design concepts.
+A complete, responsive agency website built with Next.js App Router, TypeScript, Tailwind CSS, Motion, Lucide, React Hook Form, and Zod. Custom hero mockups are inline SVG and CSS. The portfolio contains nine website projects from Kevon Cadogan's supplied portfolio, with local WebP previews and live website links. There are no invented outcomes or client testimonials. Sources and import details are in [PORTFOLIO.md](./PORTFOLIO.md).
+
+The public site now has seven pages: `/`, `/services`, `/process`, `/portfolio`, `/pricing`, `/faqs`, and `/contact`. The homepage gives a concise introduction; the existing detailed sections each have their own destination. Shared navigation, footer, page headings, breadcrumbs, and contact links work across pages. Old homepage section bookmarks are forwarded to the corresponding page in the browser. Admin drafts can be previewed page by page without publishing them.
 
 ## Run locally
 
@@ -52,13 +54,14 @@ Import this folder as a Next.js project. Use `npm run build` and the default Nex
 
 ## Edit content and visuals
 
-- `src/data/content.ts`: services, packages, project concepts, process, FAQs.
+- `src/data/content.ts`: services, packages, process, FAQs.
+- `src/data/portfolio.ts`: the nine website projects, live links, and portfolio introduction.
 - `src/lib/constants.ts`: navigation, social link, service selection options.
 - `src/app/globals.css`: brand tokens, typography, component styling, responsive breakpoints and reduced-motion handling.
 - `src/components/ui/brand.tsx`: responsive display crops of the supplied official logo. The unchanged original artwork is kept in `public/brand/content-mark-logo.png`; the footer shows its full signature. Browser and social icons use the same artwork.
 - `src/components/ui/mockups.tsx`: custom property, automotive and retail illustrations.
 - `src/components/sections/`: independently editable sections.
 
-Package CTAs use `?package=Business%20Growth#contact` (or `?service=Website%20Development#contact`) to prefill the contact service field. Concept previews use native accessible dialogs; the process uses arrow-key-accessible tabs; FAQs use native accordions; the mobile menu supports Escape and focus wrapping. A skip link, labeled fields, inline validation and live delivery feedback are included. Motion respects reduced-motion preferences.
+Package CTAs use `/contact?package=Business+Growth` (or `/contact?service=Website+Development`) to prefill the contact service field, including when changing parameters through client navigation. Project previews use native accessible dialogs; the process uses arrow-key-accessible tabs; FAQs use native accordions; the mobile menu supports Escape and focus wrapping. A skip link, labeled fields, inline validation and live delivery feedback are included. Motion respects reduced-motion preferences.
 
-Before publishing, verify the founding-client promotion is still available, replace concepts with real projects when ready, confirm the ownership/maintenance terms in the FAQs match your project agreements, and add actual business contact details through the environment configuration. These are content/configuration checks, not implementation placeholders.
+Before publishing, verify the founding-client promotion is still available, confirm the ownership/maintenance terms in the FAQs match your project agreements, and add actual business contact details through the environment configuration. Keep the portfolio project details current through the admin panel. These are content/configuration checks, not implementation placeholders.

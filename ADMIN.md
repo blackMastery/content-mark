@@ -51,6 +51,8 @@ Stop the Next.js server with Ctrl+C in its terminal. Do not use `supabase stop -
 
 **Save draft** stores changes privately. **Preview draft** opens the saved version without changing the live page. **Publish changes** validates and atomically saves/publishes the current document. Public pages only read `site_content`; they cannot read `site_drafts`. Concurrent editor sessions use revision checks to prevent one save from silently overwriting another. Save before navigating away; unsaved edits are protected by a leave-page prompt. A draft preview requires an authenticated, approved admin session.
 
+The public website is split into Home, Services, Our Process, Portfolio, Pricing, FAQs, and Contact. Existing content controls still edit those pages: hero and advantages appear on Home, and each section introduction controls the corresponding page heading and description. Preview opens the relevant page for the selected editor; preview navigation stays within `/admin/preview?page=…`, and inquiry submission is disabled in private previews. Publishing refreshes the full public site. Settings search title/description apply to the homepage; the remaining pages use distinct titles and their section introductions.
+
 Project images are public website assets in the `site-media` bucket, including newly uploaded images before publication; draft copy and inquiry data remain private. Removing an image from a draft does not delete the asset, so older published content cannot break. There is no automatic media garbage collection.
 
 ## How inquiries work

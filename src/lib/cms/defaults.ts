@@ -8,6 +8,7 @@ import {
 } from "@/data/content";
 import { facebookUrl } from "@/lib/constants";
 import { siteDocumentSchema } from "./schema";
+import { portfolioHeading } from "@/data/portfolio";
 
 export const defaultSiteDocument = siteDocumentSchema.parse({
   hero: {
@@ -46,13 +47,7 @@ export const defaultSiteDocument = siteDocumentSchema.parse({
       description:
         "No guesswork. No complicated jargon. Just a collaborative process with your business at the centre.",
     },
-    work: {
-      eyebrow: "A LOOK AT THE POSSIBILITIES",
-      title: "Big ideas.",
-      accent: "Made tangible.",
-      description:
-        "Digital experiences built around real business needs. Here's a little of what we can imagine for yours.",
-    },
+    work: portfolioHeading,
     pricing: {
       eyebrow: "A SMARTER INVESTMENT",
       title: "Your ambition.",
@@ -80,12 +75,7 @@ export const defaultSiteDocument = siteDocumentSchema.parse({
   steps,
   pricing,
   faqs,
-  projects: projects.map((p) => ({
-    ...p,
-    isConcept: true,
-    imageUrl: "",
-    websiteUrl: "",
-  })),
+  projects,
   promotion: {
     enabled: true,
     eyebrow: "FOUNDING CLIENT OFFER",

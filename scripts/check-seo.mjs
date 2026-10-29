@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { siteConfiguration } from "../src/lib/site-config.ts";
+import { sitePages } from "../src/lib/site-pages.ts";
 
 const base = new URL(process.argv[2] || "http://127.0.0.1:3000");
 const config = siteConfiguration({
@@ -138,6 +139,69 @@ for (const userAgent of [
   });
 }
 
+const routeChecks = [];
+const routeHtml = new Map();
+const uniqueTitles = new Set();
+for (const page of sitePages) {
+  const { response, html } = await fetchPage(page.path);
+  assert.equal(
+    response.status,
+    200,
+    `${page.path} must be directly accessible`,
+  );
+  assert.equal(
+    (html.match(/<h1(?:\s[^>]*)?>/g) || []).length,
+    1,
+    `${page.path} needs exactly one H1`,
+  );
+  const { get, canonicals } = metadata(html);
+  const title = get("og:title")[0];
+  assert.ok(title);
+  uniqueTitles.add(title);
+  assert.equal(get("twitter:title")[0], title);
+  assert.equal(get("description")[0], get("og:description")[0]);
+  assert.equal(canonicals.length, config.canonicalUrl ? 1 : 0);
+  if (config.canonicalUrl) {
+    const expected = config.origin + page.path;
+    assert.equal(new URL(canonicals[0].href).href, expected);
+    assert.equal(new URL(get("og:url")[0]).href, expected);
+  }
+  routeHtml.set(page.path, html);
+  routeChecks.push({
+    path: page.path,
+    title,
+    canonical: canonicals[0]?.href || null,
+  });
+}
+assert.equal(
+  uniqueTitles.size,
+  sitePages.length,
+  "Public pages need distinct titles",
+);
+for (const [path, html] of routeHtml) {
+  for (const [tag] of html.matchAll(/<a\s[^>]+>/g)) {
+    const href = attributes(tag).href;
+    if (
+      !href ||
+      (!href.startsWith("/") && !href.startsWith("#")) ||
+      href.startsWith("//")
+    )
+      continue;
+    const link = new URL(href, new URL(path, base));
+    assert.ok(
+      routeHtml.has(link.pathname),
+      `Internal link ${href} on ${path} must resolve to a public page`,
+    );
+    if (link.hash)
+      assert.ok(
+        routeHtml
+          .get(link.pathname)
+          .includes(`id="${decodeURIComponent(link.hash.slice(1))}"`),
+        `Fragment ${href} on ${path} must exist`,
+      );
+  }
+}
+
 const { response: loginResponse, html: loginHtml } =
   await fetchPage("/admin/login");
 assert.equal(loginResponse.status, 200);
@@ -161,7 +225,10 @@ assert.equal(robots.includes("Sitemap:"), config.indexable);
 const { response: sitemapResponse, html: sitemap } =
   await fetchPage("/sitemap.xml");
 assert.equal(sitemapResponse.status, 200);
-assert.equal((sitemap.match(/<loc>/g) || []).length, config.indexable ? 1 : 0);
+assert.equal(
+  (sitemap.match(/<loc>/g) || []).length,
+  config.indexable ? sitePages.length : 0,
+);
 if (config.indexable)
   assert.ok(sitemap.includes(`<loc>${config.canonicalUrl}</loc>`));
 
@@ -197,6 +264,7 @@ await writeFile(
       base: base.origin,
       indexable: config.indexable,
       pages,
+      routes: routeChecks,
       images,
       robots,
       sitemap,
@@ -206,5 +274,5 @@ await writeFile(
   ) + "\n",
 );
 console.log(
-  `SEO checks passed: 4 crawler/browser responses, private-route metadata, real 404, robots, sitemap, and 3 PNG assets. Indexable: ${config.indexable}.`,
+  `SEO checks passed: 7 public pages and their internal links, 4 crawler/browser responses, private-route metadata, real 404, robots, sitemap, and 3 PNG assets. Indexable: ${config.indexable}.`,
 );

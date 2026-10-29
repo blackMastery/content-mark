@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { saveSiteDocument } from "@/app/admin/actions";
 import { sectionKeys, type SiteDocument } from "@/lib/cms/schema";
+import { pageHref, type SitePageKey } from "@/lib/site-pages";
 
 export type EditorMode =
   "content" | "projects" | "pricing" | "faqs" | "settings";
@@ -101,6 +102,26 @@ export function ContentEditor({
   const [pending, startTransition] = useTransition();
   const [uploading, setUploading] = useState<number | null>(null);
   const [section, setSection] = useState("hero");
+  const contentPreviewPages: { sections: string[]; page: SitePageKey }[] = [
+    { sections: ["services", "services list"], page: "services" },
+    { sections: ["process", "process steps"], page: "process" },
+    { sections: ["work"], page: "portfolio" },
+    { sections: ["pricing"], page: "pricing" },
+    { sections: ["faq"], page: "faqs" },
+    { sections: ["contact"], page: "contact" },
+  ];
+  const previewPage: SitePageKey =
+    mode === "projects"
+      ? "portfolio"
+      : mode === "pricing"
+        ? "pricing"
+        : mode === "faqs"
+          ? "faqs"
+          : mode === "content"
+            ? (contentPreviewPages.find((item) =>
+                item.sections.includes(section),
+              )?.page ?? "home")
+            : "home";
   const [savedAt, setSavedAt] = useState(updatedAt);
   useEffect(() => {
     if (!dirty) return;
@@ -316,7 +337,7 @@ export function ContentEditor({
         </div>
         <div>
           <a
-            href="/admin/preview"
+            href={pageHref(previewPage, true)}
             target="_blank"
             className={`admin-secondary ${dirty ? "is-disabled" : ""}`}
             aria-disabled={dirty}
@@ -823,19 +844,20 @@ export function ContentEditor({
                 <span>SEARCH & SHARING</span>
                 <h2>Make a clear first impression.</h2>
                 <p>
-                  These details appear in search results and social previews.
+                  Your homepage uses these details. Other page descriptions
+                  follow their section introductions.
                 </p>
               </div>
               <div className="editor-form-grid">
                 {field(
-                  "Page title",
+                  "Homepage title",
                   ["settings", "seoTitle"],
                   document.settings.seoTitle,
                   false,
                   `${document.settings.seoTitle.length} characters. Aim for a clear, specific title around 50–60 characters; search engines may rewrite it.`,
                 )}
                 {field(
-                  "Meta description",
+                  "Homepage meta description",
                   ["settings", "seoDescription"],
                   document.settings.seoDescription,
                   true,

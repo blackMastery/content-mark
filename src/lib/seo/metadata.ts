@@ -1,6 +1,25 @@
 import type { Metadata } from "next";
 import type { SiteDocument } from "@/lib/cms/schema";
 import { siteConfiguration, type SiteConfiguration } from "@/lib/site-config";
+import { getSitePage, type SitePageKey } from "@/lib/site-pages";
+
+export function pageSearchCopy(site: SiteDocument, page: SitePageKey) {
+  if (page === "home")
+    return {
+      title: site.settings.seoTitle,
+      description: site.settings.seoDescription,
+    };
+  const heading =
+    page === "portfolio"
+      ? site.headings.work
+      : page === "faqs"
+        ? site.headings.faq
+        : site.headings[page];
+  return {
+    title: `${getSitePage(page).seoTitle} | Content Mark`,
+    description: heading.description.replace(/\s+/g, " ").slice(0, 320).trim(),
+  };
+}
 
 export const privateRobots = {
   index: false,
@@ -19,8 +38,19 @@ export function homeMetadata(
   revision: number,
   config: SiteConfiguration = siteConfiguration(),
 ) {
-  const title = site.settings.seoTitle;
-  const description = site.settings.seoDescription;
+  return pageMetadata(site, revision, "home", config);
+}
+
+export function pageMetadata(
+  site: SiteDocument,
+  revision: number,
+  page: SitePageKey,
+  config: SiteConfiguration = siteConfiguration(),
+) {
+  const { title, description } = pageSearchCopy(site, page);
+  const canonical = config.canonicalUrl
+    ? `${config.origin}${getSitePage(page).path}`
+    : undefined;
   const images = [
     {
       url: shareImageUrl(config.origin, revision),
@@ -33,7 +63,7 @@ export function homeMetadata(
   return {
     title,
     description,
-    alternates: { canonical: config.canonicalUrl ?? null },
+    alternates: { canonical: canonical ?? null },
     robots: config.indexable
       ? {
           index: true,
@@ -53,7 +83,7 @@ export function homeMetadata(
       type: "website",
       siteName: "Content Mark",
       locale: "en_GY",
-      url: config.canonicalUrl,
+      url: canonical,
       images,
     },
     twitter: { card: "summary_large_image", title, description, images },

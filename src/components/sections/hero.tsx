@@ -1,5 +1,4 @@
 import {
-  ArrowDown,
   ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
@@ -18,7 +17,15 @@ import {
   PropertyMockup,
 } from "@/components/ui/mockups";
 import type { SiteDocument } from "@/lib/cms/schema";
-export function Hero({ hero }: { hero: SiteDocument["hero"] }) {
+import Link from "next/link";
+import { pageHref } from "@/lib/site-pages";
+export function Hero({
+  hero,
+  preview = false,
+}: {
+  hero: SiteDocument["hero"];
+  preview?: boolean;
+}) {
   return (
     <section id="home" className="hero">
       <div className="hero-grid" aria-hidden="true" />
@@ -44,12 +51,15 @@ export function Hero({ hero }: { hero: SiteDocument["hero"] }) {
             <Reveal delay={0.35}>
               <p className="hero-description">{hero.description}</p>
               <div className="hero-buttons">
-                <a href="#contact" className="button">
+                <Link href={pageHref("contact", preview)} className="button">
                   {hero.primaryCta} <ArrowUpRight size={18} />
-                </a>
-                <a href="#services" className="text-button">
+                </Link>
+                <Link
+                  href={pageHref("services", preview)}
+                  className="text-button"
+                >
                   {hero.secondaryCta} <ArrowDownRight size={17} />
-                </a>
+                </Link>
               </div>
               <div className="hero-assurance">
                 <span>
@@ -99,12 +109,12 @@ export function Hero({ hero }: { hero: SiteDocument["hero"] }) {
               <strong>THE RIGHT STRATEGY TAKES IT FURTHER.</strong>
             </span>
           </div>
-          <a href="#services" className="scroll-link">
-            A LITTLE SCROLL. A LOT OF POSSIBILITY.{" "}
+          <Link href={pageHref("services", preview)} className="scroll-link">
+            EXPLORE OUR SERVICES. FIND YOUR NEXT STEP.{" "}
             <span>
-              <ArrowDown size={16} />
+              <ArrowUpRight size={16} />
             </span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="capabilities-strip">

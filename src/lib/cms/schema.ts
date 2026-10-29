@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isBundledProjectImage } from "./project-media";
 
 const line = z.string().trim().min(1, "This field is required.").max(180);
 const paragraph = z.string().trim().min(1, "This field is required.").max(2000);
@@ -11,6 +12,12 @@ const optionalUrl = z.union([
 ]);
 const imageUrl = z.union([
   z.literal(""),
+  z
+    .string()
+    .refine(
+      isBundledProjectImage,
+      "Choose a bundled portfolio preview or upload an image.",
+    ),
   z
     .url()
     .max(2000)

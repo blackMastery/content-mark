@@ -4,7 +4,15 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navigation } from "@/lib/constants";
 import { Brand } from "@/components/ui/brand";
-export function Navigation() {
+import Link from "next/link";
+import { pageHref, type SitePageKey } from "@/lib/site-pages";
+export function Navigation({
+  page = "home",
+  preview = false,
+}: {
+  page?: SitePageKey;
+  preview?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -43,19 +51,30 @@ export function Navigation() {
   return (
     <header className="site-header">
       <div className="container nav-shell">
-        <a href="#home" aria-label="Content Mark home" className="logo-link">
+        <Link
+          href={pageHref("home", preview)}
+          aria-label="Content Mark home"
+          className="logo-link"
+        >
           <Brand />
-        </a>
+        </Link>
         <nav aria-label="Main navigation" className="desktop-nav">
           {navigation.map((link) => (
-            <a key={link.href} href={link.href}>
+            <Link
+              key={link.key}
+              href={pageHref(link.key, preview)}
+              aria-current={page === link.key ? "page" : undefined}
+            >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
-        <a className="button button-small nav-cta" href="#contact">
+        <Link
+          className="button button-small nav-cta"
+          href={pageHref("contact", preview)}
+        >
           Start Your Project <ArrowUpRight size={16} />
-        </a>
+        </Link>
         <button
           ref={toggle}
           className="menu-toggle"
@@ -80,23 +99,24 @@ export function Navigation() {
           >
             <nav aria-label="Mobile navigation">
               {navigation.map((link, i) => (
-                <a
-                  key={link.href}
-                  href={link.href}
+                <Link
+                  key={link.key}
+                  href={pageHref(link.key, preview)}
+                  aria-current={page === link.key ? "page" : undefined}
                   onClick={() => setOpen(false)}
                 >
                   <span>0{i + 1}</span>
                   {link.label}
                   <ArrowUpRight size={19} />
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
+              <Link
+                href={pageHref("contact", preview)}
                 className="mobile-project"
                 onClick={() => setOpen(false)}
               >
                 Start Your Project <ArrowUpRight />
-              </a>
+              </Link>
             </nav>
           </motion.div>
         ) : null}

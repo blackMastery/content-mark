@@ -1,7 +1,15 @@
 import { requireAdmin } from "@/lib/supabase/admin";
 import { siteDocumentSchema } from "@/lib/cms/schema";
 import { SiteView } from "@/components/site-view";
-export default async function PreviewPage() {
+import { sitePages } from "@/lib/site-pages";
+export default async function PreviewPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const requestedPage = (await searchParams).page;
+  const page =
+    sitePages.find((page) => page.key === requestedPage)?.key ?? "home";
   const { client } = await requireAdmin();
   const { data, error } = await client
     .from("site_drafts")
@@ -9,5 +17,11 @@ export default async function PreviewPage() {
     .eq("id", "main")
     .single();
   if (error) throw new Error("The draft couldn't be loaded.");
-  return <SiteView site={siteDocumentSchema.parse(data.document)} preview />;
+  return (
+    <SiteView
+      site={siteDocumentSchema.parse(data.document)}
+      preview
+      page={page}
+    />
+  );
 }

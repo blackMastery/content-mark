@@ -1,13 +1,16 @@
 import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { Brand } from "@/components/ui/brand";
-import { navigation } from "@/lib/constants";
+import Link from "next/link";
+import { pageHref, sitePages } from "@/lib/site-pages";
 import type { SiteDocument } from "@/lib/cms/schema";
 export function Footer({
   settings,
   services,
+  preview = false,
 }: {
   settings: SiteDocument["settings"];
   services: SiteDocument["services"];
+  preview?: boolean;
 }) {
   const instagram = settings.instagramUrl;
   return (
@@ -15,30 +18,33 @@ export function Footer({
       <div className="container">
         <div className="footer-top">
           <div className="footer-brand">
-            <a href="#home" aria-label="Content Mark home">
+            <Link
+              href={pageHref("home", preview)}
+              aria-label="Content Mark home"
+            >
               <Brand variant="full" />
-            </a>
+            </Link>
             <p className="cms-lines">{settings.footerDescription}</p>
           </div>
           <div className="footer-links">
             <span>EXPLORE</span>
-            {navigation
-              .filter((l) => l.label !== "Home")
+            {sitePages
+              .filter((l) => l.key !== "home")
               .map((link) => (
-                <a key={link.href} href={link.href}>
+                <Link key={link.key} href={pageHref(link.key, preview)}>
                   {link.label}
-                </a>
+                </Link>
               ))}
           </div>
           <div className="footer-links">
             <span>WHAT WE DO</span>
             {services.map((service) => (
-              <a
+              <Link
                 key={service.type}
-                href={`?service=${encodeURIComponent(service.title)}#contact`}
+                href={pageHref("contact", preview, { service: service.title })}
               >
                 {service.title}
-              </a>
+              </Link>
             ))}
           </div>
           <div className="footer-links">
@@ -59,7 +65,7 @@ export function Footer({
             <span className="footer-location">
               <i className="live-dot" /> Based in Guyana
             </span>
-            <a href="#home" className="back-top" aria-label="Back to top">
+            <a href="#top" className="back-top" aria-label="Back to top">
               <ArrowUp size={17} />
             </a>
           </div>

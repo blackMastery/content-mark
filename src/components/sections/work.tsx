@@ -10,15 +10,26 @@ import {
 } from "@/components/ui/mockups";
 import { Reveal } from "@/components/animations/reveal";
 import Image from "next/image";
+import Link from "next/link";
+import { pageHref } from "@/lib/site-pages";
+import {
+  getBundledProjectImage,
+  isBundledProjectImage,
+} from "@/lib/cms/project-media";
 export function Work({
   projects,
   copy,
   websiteService,
+  preview: draftPreview = false,
+  headingAs = "h2",
 }: {
   projects: SiteDocument["projects"];
   copy: SectionCopy;
   websiteService: string;
+  preview?: boolean;
+  headingAs?: "h1" | "h2";
 }) {
+  const CardHeading = headingAs === "h1" ? "h2" : "h3";
   const [selected, setSelected] = useState<Project>(projects[0]);
   const dialog = useRef<HTMLDialogElement>(null);
   function preview(project: Project) {
@@ -38,6 +49,7 @@ export function Work({
       <div className="container">
         <SectionHeading
           copy={copy}
+          headingAs={headingAs}
           disclaimer={
             projects.every((p) => p.isConcept)
               ? "CONCEPT WORK — A GLIMPSE OF WHAT’S POSSIBLE"
@@ -75,8 +87,11 @@ export function Work({
                       src={project.imageUrl}
                       alt={`${project.name} — ${project.isConcept ? "concept design" : "project"}: ${project.title}`}
                       width={1200}
-                      height={800}
-                      unoptimized
+                      height={
+                        getBundledProjectImage(project.imageUrl)?.height ?? 800
+                      }
+                      sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                      unoptimized={!isBundledProjectImage(project.imageUrl)}
                     />
                   ) : (
                     mockup(project.theme)
@@ -89,7 +104,7 @@ export function Work({
               </button>
               <div className="project-info">
                 <span className="eyebrow">{project.category}</span>
-                <h3>{project.title}</h3>
+                <CardHeading>{project.title}</CardHeading>
                 <p>{project.description}</p>
               </div>
             </Reveal>
@@ -97,9 +112,12 @@ export function Work({
         </div>
         <div className="work-bottom">
           <p>Your business could be our next great project.</p>
-          <a href="#contact" className="text-button">
+          <Link
+            href={pageHref("contact", draftPreview)}
+            className="text-button"
+          >
             Let&apos;s make it happen <ArrowUpRight size={18} />
-          </a>
+          </Link>
         </div>
       </div>
       <dialog
@@ -133,8 +151,11 @@ export function Work({
                 src={selected.imageUrl}
                 alt={`${selected.name} — ${selected.isConcept ? "concept design" : "project"}: ${selected.title}`}
                 width={1200}
-                height={800}
-                unoptimized
+                height={
+                  getBundledProjectImage(selected.imageUrl)?.height ?? 800
+                }
+                sizes="(max-width: 800px) 100vw, 900px"
+                unoptimized={!isBundledProjectImage(selected.imageUrl)}
               />
             ) : (
               mockup(selected.theme)
@@ -156,13 +177,15 @@ export function Work({
               Visit project website <ArrowUpRight size={16} />
             </a>
           ) : null}
-          <a
-            href={`?service=${encodeURIComponent(websiteService)}#contact`}
+          <Link
+            href={pageHref("contact", draftPreview, {
+              service: websiteService,
+            })}
             className="button"
             onClick={() => dialog.current?.close()}
           >
             Build something for my business <ArrowUpRight size={17} />
-          </a>
+          </Link>
         </div>
       </dialog>
     </section>

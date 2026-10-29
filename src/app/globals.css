@@ -234,7 +234,7 @@ ul {
   gap: 50px;
   margin-bottom: 48px;
 }
-.section-heading h2 {
+.section-heading :is(h1, h2) {
   margin-top: 19px;
 }
 .section-heading > p,
@@ -1206,7 +1206,7 @@ ul {
 .service-copy {
   padding: 0 26px 26px;
 }
-.service-copy h3 {
+.service-copy :is(h2, h3) {
   font-size: 25px;
   line-height: 1.22;
   white-space: pre-line;
@@ -1546,7 +1546,7 @@ ul {
   color: #163c25;
   box-shadow: 0 0 0 6px #45e5a40a;
 }
-.process-tabs h3 {
+.process-tabs :is(h2, h3) {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1555,11 +1555,11 @@ ul {
   color: #adbbb0;
   transition: color 0.2s;
 }
-.process-tabs h3 svg {
+.process-tabs :is(h2, h3) svg {
   color: #4e6a56;
 }
-.process-tabs > button.active h3,
-.process-tabs > button.active h3 svg {
+.process-tabs > button.active :is(h2, h3),
+.process-tabs > button.active :is(h2, h3) svg {
   color: var(--mint);
 }
 .process-tabs p {
@@ -1730,7 +1730,7 @@ ul {
   letter-spacing: 1.3px;
   color: #9bb5a1;
 }
-.project-info h3 {
+.project-info :is(h2, h3) {
   font-size: 23px;
   letter-spacing: -0.8px;
   line-height: 1.2;
@@ -2021,7 +2021,7 @@ ul {
   color: #8ba692;
   letter-spacing: 1px;
 }
-.pricing-card h3 {
+.pricing-card :is(h2, h3) {
   font-size: 27px;
   margin: 18px 0 9px;
   letter-spacing: -1px;
@@ -2261,7 +2261,7 @@ ul {
   grid-template-columns: 0.85fr 1.15fr;
   gap: 85px;
 }
-.faq-intro h2 {
+.faq-intro :is(h1, h2) {
   margin: 21px 0 22px;
   font-size: 45px;
 }
@@ -2339,14 +2339,14 @@ ul {
 .contact-intro > .eyebrow {
   font-size: 8px;
 }
-.contact-intro h2 {
+.contact-intro :is(h1, h2) {
   font-size: 65px;
   line-height: 1.05;
   letter-spacing: -3.5px;
   margin-top: 23px;
   position: relative;
 }
-.contact-intro h2 > svg {
+.contact-intro :is(h1, h2) > svg {
   position: absolute;
   bottom: 3px;
   right: 18px;
@@ -2850,7 +2850,7 @@ ul {
   .service-copy {
     padding-inline: 20px;
   }
-  .service-copy h3 {
+  .service-copy :is(h2, h3) {
     font-size: 22px;
   }
   .service-top {
@@ -2907,7 +2907,7 @@ ul {
   .work-grid {
     gap: 18px;
   }
-  .project-info h3 {
+  .project-info :is(h2, h3) {
     font-size: 21px;
   }
   .project-mockup .property-copy h3 {
@@ -2940,7 +2940,7 @@ ul {
   .price-billing {
     font-size: 7px;
   }
-  .pricing-card h3 {
+  .pricing-card :is(h2, h3) {
     font-size: 25px;
   }
   .plan-ongoing {
@@ -2970,10 +2970,10 @@ ul {
   .contact-layout {
     gap: 60px;
   }
-  .contact-intro h2 {
+  .contact-intro :is(h1, h2) {
     font-size: 58px;
   }
-  .contact-intro h2 > svg {
+  .contact-intro :is(h1, h2) > svg {
     width: 65px;
     right: 0;
   }
@@ -3263,7 +3263,7 @@ ul {
   .service-copy {
     padding-inline: 16px;
   }
-  .service-copy h3 {
+  .service-copy :is(h2, h3) {
     font-size: 20px;
   }
   .service-copy > p {
@@ -3396,7 +3396,7 @@ ul {
   .process-tabs > button {
     padding-right: 20px;
   }
-  .process-tabs h3 {
+  .process-tabs :is(h2, h3) {
     font-size: 20px;
   }
   .process-tabs p {
@@ -3418,7 +3418,7 @@ ul {
   .work-grid {
     gap: 15px;
   }
-  .project-info h3 {
+  .project-info :is(h2, h3) {
     font-size: 18px;
   }
   .project-info p {
@@ -3523,7 +3523,7 @@ ul {
   .pricing-card-inner {
     padding: 25px 17px;
   }
-  .pricing-card h3 {
+  .pricing-card :is(h2, h3) {
     font-size: 23px;
   }
   .pricing-grid {
@@ -3605,7 +3605,7 @@ ul {
     gap: 45px;
     grid-template-columns: 0.9fr 1.1fr;
   }
-  .faq-intro h2 {
+  .faq-intro :is(h1, h2) {
     font-size: 37px;
   }
   .faq-list summary {
@@ -3620,11 +3620,11 @@ ul {
     gap: 42px;
     grid-template-columns: 0.9fr 1.1fr;
   }
-  .contact-intro h2 {
+  .contact-intro :is(h1, h2) {
     font-size: 51px;
     letter-spacing: -2.7px;
   }
-  .contact-intro h2 > svg {
+  .contact-intro :is(h1, h2) > svg {
     width: 58px;
     height: 58px;
     right: 0;
@@ -3952,7 +3952,7 @@ ul {
     font-size: 8px;
     letter-spacing: 1.5px;
   }
-  .section-heading h2 {
+  .section-heading :is(h1, h2) {
     margin-top: 17px;
   }
   .section-heading > p,
@@ -3988,7 +3988,7 @@ ul {
     padding: 25px 20px 21px 7px;
     align-self: center;
   }
-  .service-copy h3 {
+  .service-copy :is(h2, h3) {
     font-size: 23px;
     margin-bottom: 12px;
   }
@@ -4172,11 +4172,11 @@ ul {
   .process-tabs > button:nth-child(2) .step-track > i {
     margin-right: 0;
   }
-  .process-tabs h3 {
+  .process-tabs :is(h2, h3) {
     font-size: 23px;
     margin-bottom: 9px;
   }
-  .process-tabs h3 svg {
+  .process-tabs :is(h2, h3) svg {
     width: 16px;
   }
   .process-tabs p {
@@ -4324,7 +4324,7 @@ ul {
   .project-info .eyebrow {
     font-size: 7px;
   }
-  .project-info h3 {
+  .project-info :is(h2, h3) {
     font-size: 26px;
     letter-spacing: -1px;
     margin: 10px 0 10px;
@@ -4356,7 +4356,7 @@ ul {
   .plan-index {
     font-size: 8px;
   }
-  .pricing-card h3 {
+  .pricing-card :is(h2, h3) {
     font-size: 30px;
     margin: 16px 0 9px;
   }
@@ -4477,7 +4477,7 @@ ul {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .faq-intro h2 {
+  .faq-intro :is(h1, h2) {
     font-size: 37px;
   }
   .faq-intro > .eyebrow {
@@ -4507,12 +4507,12 @@ ul {
     grid-template-columns: 1fr;
     gap: 36px;
   }
-  .contact-intro h2 {
+  .contact-intro :is(h1, h2) {
     font-size: 57px;
     letter-spacing: -3px;
     max-width: 370px;
   }
-  .contact-intro h2 > svg {
+  .contact-intro :is(h1, h2) > svg {
     width: 65px;
     height: 65px;
     right: 20px;
@@ -4866,7 +4866,7 @@ ul {
   .service-copy {
     padding: 0 25px 25px;
   }
-  .service-copy h3 {
+  .service-copy :is(h2, h3) {
     font-size: 28px;
   }
   .service-copy > p {
@@ -5068,7 +5068,7 @@ ul {
     font-size: 4.5px;
     padding: 7px;
   }
-  .contact-intro h2 {
+  .contact-intro :is(h1, h2) {
     font-size: 54px;
   }
   .contact-form-panel {
@@ -5208,12 +5208,12 @@ ul {
     width: 25px;
     height: 25px;
   }
-  .section-heading h2,
+  .section-heading :is(h1, h2),
   .why-intro h2,
-  .faq-intro h2 {
+  .faq-intro :is(h1, h2) {
     font-size: 33px;
   }
-  .service-copy h3 {
+  .service-copy :is(h2, h3) {
     font-size: 25px;
   }
   .advantage h3 {
@@ -5223,7 +5223,7 @@ ul {
     transform: scale(0.67);
     height: 135px;
   }
-  .process-tabs h3 {
+  .process-tabs :is(h2, h3) {
     font-size: 21px;
   }
   .process-tabs p {
@@ -5256,13 +5256,13 @@ ul {
   .project-mockup .retail-content p {
     font-size: 4px;
   }
-  .project-info h3 {
+  .project-info :is(h2, h3) {
     font-size: 23px;
   }
   .pricing-card-inner {
     padding: 25px 23px;
   }
-  .pricing-card h3 {
+  .pricing-card :is(h2, h3) {
     font-size: 28px;
   }
   .plan-price strong {
@@ -5294,10 +5294,10 @@ ul {
     right: 10px;
     width: 130px;
   }
-  .contact-intro h2 {
+  .contact-intro :is(h1, h2) {
     font-size: 47px;
   }
-  .contact-intro h2 > svg {
+  .contact-intro :is(h1, h2) > svg {
     right: 5px;
     width: 55px;
     height: 55px;
@@ -5462,6 +5462,164 @@ ul {
 .work-preview.has-project-image .preview-label {
   color: white;
 }
+.work-preview.has-project-image {
+  aspect-ratio: 16 / 10;
+  background: #101b14;
+}
+.work-preview.has-project-image .project-mockup {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+.work-preview.has-project-image .project-cover {
+  object-fit: contain;
+  object-position: center;
+}
+.work-preview.has-project-image .project-preview-top {
+  position: absolute;
+  inset: 0 0 auto;
+}
 .work-preview.has-project-image:hover .project-mockup {
   transform: scale(1.03);
+}
+
+.desktop-nav a[aria-current="page"],
+.mobile-nav a[aria-current="page"] {
+  color: var(--mint);
+}
+.desktop-nav a[aria-current="page"]::after {
+  width: 100%;
+}
+.page-breadcrumb {
+  display: flex;
+  gap: 12px;
+  padding-top: 32px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.page-breadcrumb a:hover {
+  color: var(--mint);
+}
+.page-breadcrumb [aria-current] {
+  color: var(--text);
+}
+.inner-page > .section:first-of-type {
+  padding-top: 64px;
+}
+.inner-page h1 {
+  font-size: clamp(38px, 4.8vw, 64px);
+  line-height: 1.1;
+  letter-spacing: -2.4px;
+  margin-bottom: 0;
+}
+.inner-page :is(.service-copy, .project-info, .pricing-card, .process-tabs) h2 {
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+.home-service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.home-service-card {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #101b14;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+}
+.home-service-card:hover {
+  border-color: #45e5a470;
+  transform: translateY(-4px);
+}
+.home-service-card > .eyebrow {
+  display: flex;
+  justify-content: space-between;
+  color: var(--mint);
+}
+.home-service-card h3 {
+  font-size: 27px;
+  line-height: 1.15;
+  margin: 40px 0 20px;
+}
+.home-service-card p {
+  font-size: 12px;
+  margin-bottom: 32px;
+}
+.home-card-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  color: var(--mint);
+  font-size: 11px;
+}
+.home-page-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  justify-content: space-between;
+  padding-top: 32px;
+}
+.home-page-links a {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 12px;
+}
+.home-page-links a:hover {
+  color: var(--mint);
+}
+.page-next-step {
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
+  background: #101b14;
+}
+.page-next-step > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+.page-next-step h2 {
+  font-size: clamp(30px, 3.3vw, 46px);
+  max-width: 600px;
+  margin: 20px 0;
+}
+.page-next-step p {
+  max-width: 600px;
+  font-size: 12px;
+}
+.page-next-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+@media (max-width: 767px) {
+  .home-service-grid {
+    grid-template-columns: 1fr;
+  }
+  .page-next-step > .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  .home-page-links {
+    flex-direction: column;
+  }
+  .inner-page > .section:first-of-type {
+    padding-top: 44px;
+  }
+  .page-next-step {
+    padding: 56px 0;
+  }
 }

@@ -8,6 +8,7 @@ import {
 } from "../src/lib/seo/structured-data";
 import { publicSitemap, crawlerRules } from "../src/lib/seo/crawlers";
 import { defaultSiteDocument } from "../src/lib/cms/defaults";
+import { sitePages } from "../src/lib/site-pages";
 
 // Example origins are fixtures, never a proposed production domain.
 const production = siteConfiguration({
@@ -100,14 +101,19 @@ test("staging has no indexable sitemap or fabricated canonical", () => {
   });
 });
 
-test("sitemap uses the published timestamp and contains only the canonical page", () => {
+test("sitemap uses the publication timestamp for all public canonical pages", () => {
   const publishedAt = "2026-10-27T19:50:37.000Z";
-  assert.deepEqual(publicSitemap(production, publishedAt), [
-    { url: production.origin + "/", lastModified: publishedAt },
-  ]);
-  assert.deepEqual(publicSitemap(production), [
-    { url: production.origin + "/" },
-  ]);
+  assert.deepEqual(
+    publicSitemap(production, publishedAt),
+    sitePages.map((page) => ({
+      url: production.origin + page.path,
+      lastModified: publishedAt,
+    })),
+  );
+  assert.deepEqual(
+    publicSitemap(production),
+    sitePages.map((page) => ({ url: production.origin + page.path })),
+  );
   assert.equal(
     crawlerRules(production).sitemap,
     production.origin + "/sitemap.xml",
