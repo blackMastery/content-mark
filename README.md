@@ -6,7 +6,9 @@ Search metadata, canonical URLs, indexing controls, share images, structured dat
 
 A complete, responsive agency website built with Next.js App Router, TypeScript, Tailwind CSS, Motion, Lucide, React Hook Form, and Zod. Custom hero mockups are inline SVG and CSS. The portfolio contains nine website projects from Kevon Cadogan's supplied portfolio, with local WebP previews and live website links. There are no invented outcomes or client testimonials. Sources and import details are in [PORTFOLIO.md](./PORTFOLIO.md).
 
-The public site now has seven pages: `/`, `/services`, `/process`, `/portfolio`, `/pricing`, `/faqs`, and `/contact`. The homepage gives a concise introduction; the existing detailed sections each have their own destination. Shared navigation, footer, page headings, breadcrumbs, and contact links work across pages. Old homepage section bookmarks are forwarded to the corresponding page in the browser. Admin drafts can be previewed page by page without publishing them.
+The public site now has eight main pages: `/`, `/services`, `/process`, `/portfolio`, `/pricing`, `/faqs`, `/blog`, and `/contact`. The homepage gives a concise introduction; the existing detailed sections each have their own destination. Shared navigation, footer, page headings, breadcrumbs, and contact links work across pages. Old homepage section bookmarks are forwarded to the corresponding page in the browser. Admin drafts can be previewed page by page without publishing them.
+
+The blog includes private article drafts, text/image/video blocks, saved previews, independent publication, and unpublishing. Manage it from `/admin/blog`; the public journal is `/blog`. See the blog workflow and media limits in [ADMIN.md](./ADMIN.md#blog-articles).
 
 ## Run locally
 

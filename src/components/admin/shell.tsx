@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
+  BookOpen,
   CircleHelp,
   FileText,
   Images,
@@ -19,6 +20,7 @@ import { Brand } from "@/components/ui/brand";
 import { signOut } from "@/app/admin/actions";
 const links = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
+  { href: "/admin/blog", label: "Blog", icon: BookOpen },
   { href: "/admin/content", label: "Page content", icon: FileText },
   { href: "/admin/projects", label: "Projects", icon: Images },
   { href: "/admin/pricing", label: "Pricing & offer", icon: Tags },

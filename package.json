@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "seo:check": "node --env-file-if-exists=.env.local --import tsx scripts/check-seo.mjs",
-    "test": "node --conditions=react-server --import tsx --test tests/*.test.ts",
+    "test": "node --conditions=react-server --import tsx --test tests/*.test.ts && node --import tsx --test tests/*.test.tsx",
     "db:start": "node scripts/start-local.mjs",
     "db:stop": "supabase stop",
     "db:env": "node scripts/local-env.mjs",

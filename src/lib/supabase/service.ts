@@ -2,7 +2,8 @@ import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseConfig } from "./config";
 
-// This key is used only by the server to receive public inquiries. CMS edits
+// The server uses this key for public inquiries and signed access to blog media.
+// Media signing first checks the publication or authenticated draft. CMS edits
 // always use the signed-in admin's own session and database RLS policies.
 export function createServiceSupabase() {
   const { url } = supabaseConfig();

@@ -96,3 +96,30 @@ Apply the tracked migrations to your hosted project, provision an Auth user and 
 Configure distributed rate limiting through the existing Upstash variables (or your hosting firewall) before serving public production traffic. The Docker stack here is for local development; it is not a public production Supabase deployment.
 
 Implementation references: [Supabase SSR clients](https://supabase.com/docs/guides/auth/server-side/creating-a-client?framework=nextjs), [Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [local development](https://supabase.com/docs/guides/local-development).
+
+## Blog articles
+
+Open **Blog** in the admin navigation (`/admin/blog`) and choose **New article**.
+
+1. Add a title, URL slug, and excerpt. The slug is suggested from the title until you customize it.
+2. Add paragraph, heading, image, and video blocks. Move or remove blocks with their controls. Text is rendered safely as text; a blank line creates a new paragraph.
+3. Upload an optional cover. Images support PNG, JPEG, and WebP up to 5 MB. Add descriptive alt text before publishing.
+4. For videos, paste a YouTube / Vimeo URL or upload an MP4 / WebM file up to 50 MB. Use a hosted video link for longer files or deployments with a smaller HTTP upload limit. Uploaded files are played with native controls; embeds use only the approved video providers. Add captions in the video itself and summarize key content in the article.
+5. **Save draft** keeps an article private. **Save & preview** saves first, then opens an authenticated reading preview. **Publish article** / **Publish changes** validates and saves a live snapshot. Saving later edits leaves the existing public version intact.
+6. **Unpublish article** removes the public version while retaining the draft. Unpublished drafts can be deleted after an in-editor confirmation. Removed media stays in the private bucket; automatic media garbage collection is not implemented.
+
+The public journal is `/blog`; articles are `/blog/<slug>`. Article slugs must be unique among publications. Changing a published slug retires its previous URL. The listing shows an honest empty state until an administrator publishes the first article. No sample articles are seeded.
+
+`blog_posts` holds private drafts and revisions. `blog_publications` contains public snapshots. The invoker functions atomically update publications and reject stale revisions. RLS permits only approved administrators to change either table; visitors can read only `blog_publications`.
+
+The `blog-media` bucket is **private**. Uploads require an admin session and validate signatures, type, and size. Media requests first check that the requested file is referenced by the relevant published article (or an authenticated private preview), then issue an expiring signed storage URL. A new draft image is not exposed by guessing its file path. A signed URL already issued remains valid for up to one hour after an article is unpublished.
+
+The blog migration is `supabase/migrations/20261029233156_blog_posts.sql`; apply it with the existing migrations in each environment. The current linked hosted project has this migration applied. The standalone original `schema.sql` predates the blog and must not replace migration-based setup.
+
+`tests/blog-workflow.sql` checks draft isolation, atomic publication, stale revisions, anonymous / non-admin denial, and unpublishing inside a transaction that always rolls back. On the existing Docker stack:
+
+```sh
+docker exec -i supabase_db_conten-mark-landingpage psql -U postgres -d postgres -v ON_ERROR_STOP=1 < tests/blog-workflow.sql
+```
+
+An approved admin membership must already exist. This test does not create or modify accounts.

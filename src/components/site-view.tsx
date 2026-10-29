@@ -20,10 +20,12 @@ export function SiteView({
   site,
   page = "home",
   preview = false,
+  children,
 }: {
   site: SiteDocument;
   page?: SitePageKey;
   preview?: boolean;
+  children?: React.ReactNode;
 }) {
   return (
     <div id="top" className={preview ? "site-preview" : undefined}>
@@ -46,6 +48,7 @@ export function SiteView({
             <span aria-current="page">{getSitePage(page).label}</span>
           </nav>
         ) : null}
+        {children}
         {page === "home" ? (
           <>
             <Hero hero={site.hero} preview={preview} />

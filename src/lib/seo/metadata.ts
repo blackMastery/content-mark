@@ -9,6 +9,12 @@ export function pageSearchCopy(site: SiteDocument, page: SitePageKey) {
       title: site.settings.seoTitle,
       description: site.settings.seoDescription,
     };
+  if (page === "blog")
+    return {
+      title: "Website & Marketing Insights | Content Mark",
+      description:
+        "Ideas, practical advice, and insights on websites, digital advertising, and growing your business online. From the Content Mark journal.",
+    };
   const heading =
     page === "portfolio"
       ? site.headings.work

@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-29T01:28:49.777Z",
+  "checkedAt": "2026-10-29T23:53:03.767Z",
   "base": "http://127.0.0.1:3000",
   "indexable": false,
   "pages": [
@@ -7,7 +7,7 @@
       "userAgent": "facebookexternalhit/1.1",
       "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
       "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
-      "image": "http://localhost:3000/opengraph-image?v=2",
+      "image": "http://localhost:3000/opengraph-image?v=6",
       "canonical": null,
       "robots": "noindex, nofollow, noarchive, nosnippet",
       "structuredDataNodes": 0
@@ -16,7 +16,7 @@
       "userAgent": "Twitterbot/1.0",
       "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
       "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
-      "image": "http://localhost:3000/opengraph-image?v=2",
+      "image": "http://localhost:3000/opengraph-image?v=6",
       "canonical": null,
       "robots": "noindex, nofollow, noarchive, nosnippet",
       "structuredDataNodes": 0
@@ -25,7 +25,7 @@
       "userAgent": "Googlebot",
       "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
       "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
-      "image": "http://localhost:3000/opengraph-image?v=2",
+      "image": "http://localhost:3000/opengraph-image?v=6",
       "canonical": null,
       "robots": "noindex, nofollow, noarchive, nosnippet",
       "structuredDataNodes": 0
@@ -34,7 +34,7 @@
       "userAgent": "Mozilla/5.0",
       "title": "Content Mark — Websites, Advertising & Digital Growth in Guyana",
       "description": "Your Internet Awareness Component. Content Mark builds professional websites, Facebook and Instagram campaigns, and connected lead generation for ambitious businesses in Guyana.",
-      "image": "http://localhost:3000/opengraph-image?v=2",
+      "image": "http://localhost:3000/opengraph-image?v=6",
       "canonical": null,
       "robots": "noindex, nofollow, noarchive, nosnippet",
       "structuredDataNodes": 0
@@ -72,6 +72,11 @@
       "canonical": null
     },
     {
+      "path": "/blog",
+      "title": "Website & Marketing Insights | Content Mark",
+      "canonical": null
+    },
+    {
       "path": "/contact",
       "title": "Start Your Project | Content Mark",
       "canonical": null
@@ -79,7 +84,7 @@
   ],
   "images": [
     {
-      "path": "/opengraph-image?v=2",
+      "path": "/opengraph-image?v=6",
       "width": 1200,
       "height": 630,
       "bytes": 65956

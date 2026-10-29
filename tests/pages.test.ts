@@ -16,7 +16,7 @@ const production = siteConfiguration({
   NEXT_PUBLIC_SITE_URL: "https://agency.example.com",
 });
 
-test("the public site has seven distinct destinations and query-safe contact links", () => {
+test("the public site has eight distinct destinations and query-safe contact links", () => {
   assert.deepEqual(
     sitePages.map((page) => page.path),
     [
@@ -26,6 +26,7 @@ test("the public site has seven distinct destinations and query-safe contact lin
       "/portfolio",
       "/pricing",
       "/faqs",
+      "/blog",
       "/contact",
     ],
   );

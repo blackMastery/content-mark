@@ -225,10 +225,21 @@ assert.equal(robots.includes("Sitemap:"), config.indexable);
 const { response: sitemapResponse, html: sitemap } =
   await fetchPage("/sitemap.xml");
 assert.equal(sitemapResponse.status, 200);
-assert.equal(
-  (sitemap.match(/<loc>/g) || []).length,
-  config.indexable ? sitePages.length : 0,
+const sitemapUrls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(
+  (match) => match[1],
 );
+if (config.indexable) {
+  for (const page of sitePages)
+    assert.ok(sitemapUrls.includes(config.origin + page.path));
+  assert.ok(
+    sitemapUrls.every(
+      (url) =>
+        sitePages.some((page) => url === config.origin + page.path) ||
+        (new URL(url).origin === config.origin &&
+          /^\/blog\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(new URL(url).pathname)),
+    ),
+  );
+} else assert.equal(sitemapUrls.length, 0);
 if (config.indexable)
   assert.ok(sitemap.includes(`<loc>${config.canonicalUrl}</loc>`));
 
@@ -274,5 +285,5 @@ await writeFile(
   ) + "\n",
 );
 console.log(
-  `SEO checks passed: 7 public pages and their internal links, 4 crawler/browser responses, private-route metadata, real 404, robots, sitemap, and 3 PNG assets. Indexable: ${config.indexable}.`,
+  `SEO checks passed: ${sitePages.length} public pages and their internal links, 4 crawler/browser responses, private-route metadata, real 404, robots, sitemap, and 3 PNG assets. Indexable: ${config.indexable}.`,
 );

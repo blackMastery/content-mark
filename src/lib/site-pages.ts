@@ -31,6 +31,12 @@ export const sitePages = [
     seoTitle: "Website & Advertising FAQs",
   },
   {
+    key: "blog",
+    path: "/blog",
+    label: "Blog",
+    seoTitle: "Website & Marketing Insights",
+  },
+  {
     key: "contact",
     path: "/contact",
     label: "Contact",

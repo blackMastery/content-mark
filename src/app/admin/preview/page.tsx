@@ -1,3 +1,5 @@
+import { BlogIndex } from "@/components/blog/article";
+import { getPublishedArticles } from "@/lib/blog/content";
 import { requireAdmin } from "@/lib/supabase/admin";
 import { siteDocumentSchema } from "@/lib/cms/schema";
 import { SiteView } from "@/components/site-view";
@@ -22,6 +24,10 @@ export default async function PreviewPage({
       site={siteDocumentSchema.parse(data.document)}
       preview
       page={page}
-    />
+    >
+      {page === "blog" ? (
+        <BlogIndex articles={await getPublishedArticles()} />
+      ) : null}
+    </SiteView>
   );
 }
