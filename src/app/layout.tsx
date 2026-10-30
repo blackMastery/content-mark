@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { getSiteUrl } from "@/lib/constants";
+import { Analytics } from "@vercel/analytics/next";
+
 import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
@@ -36,6 +38,7 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <Analytics />
       </body>
     </html>
   );
