@@ -102,7 +102,7 @@ Implementation references: [Supabase SSR clients](https://supabase.com/docs/guid
 Open **Blog** in the admin navigation (`/admin/blog`) and choose **New article**.
 
 1. Add a title, URL slug, and excerpt. The slug is suggested from the title until you customize it.
-2. Add paragraph, heading, image, and video blocks. Move or remove blocks with their controls. Text is rendered safely as text; a blank line creates a new paragraph.
+2. Add paragraph, heading, image, and video blocks. Move or remove blocks with their controls. Text blocks use a visual formatting toolbar: bold, italic, underline, strikethrough, inline code, headings, bulleted / numbered lists, quotes, undo / redo, and add / edit / remove links. Select text, choose the link icon, enter a full web URL or site path, and apply it. You can also insert a new link with its own label. Text and links render safely in previews and published articles; existing plain-text blocks remain compatible.
 3. Upload an optional cover. Images support PNG, JPEG, and WebP up to 5 MB. Add descriptive alt text before publishing.
 4. For videos, paste a YouTube / Vimeo URL or upload an MP4 / WebM file up to 50 MB. Use a hosted video link for longer files or deployments with a smaller HTTP upload limit. Uploaded files are played with native controls; embeds use only the approved video providers. Add captions in the video itself and summarize key content in the article.
 5. **Save draft** keeps an article private. **Save & preview** saves first, then opens an authenticated reading preview. **Publish article** / **Publish changes** validates and saves a live snapshot. Saving later edits leaves the existing public version intact.
@@ -123,3 +123,5 @@ docker exec -i supabase_db_conten-mark-landingpage psql -U postgres -d postgres 
 ```
 
 An approved admin membership must already exist. This test does not create or modify accounts.
+
+Rich text is stored as validated structured content inside each text block. Only supported nodes and marks are accepted; executable / data URLs and protocol-relative links are rejected. The public renderer uses React elements and never injects editor HTML. This change requires no database migration.

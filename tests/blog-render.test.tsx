@@ -61,3 +61,101 @@ test("private previews mark every uploaded asset as an authenticated draft reque
   assert.equal((html.match(/src="[^"]*preview=1"/g) || []).length, 3);
   assert.ok(html.includes("/admin/blog/abc"));
 });
+
+test("formatted articles render semantic text and links without injecting HTML", () => {
+  const richPost: BlogDocument = {
+    ...post,
+    cover: "",
+    blocks: [
+      {
+        id: "rich",
+        type: "text",
+        text: "Fallback should not duplicate content",
+        richText: {
+          type: "doc",
+          content: [
+            {
+              type: "heading",
+              attrs: { level: 2 },
+              content: [{ type: "text", text: "A useful section" }],
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "<img src=x onerror=alert(1)>",
+                  marks: [
+                    { type: "bold" },
+                    { type: "italic" },
+                    { type: "underline" },
+                  ],
+                },
+                {
+                  type: "text",
+                  text: " Our services",
+                  marks: [{ type: "link", attrs: { href: "/services" } }],
+                },
+              ],
+            },
+            {
+              type: "bulletList",
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [{ type: "text", text: "One clear point" }],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: "orderedList",
+              attrs: { start: 3 },
+              content: [
+                {
+                  type: "listItem",
+                  content: [
+                    {
+                      type: "paragraph",
+                      content: [{ type: "text", text: "Third step" }],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: "blockquote",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [{ type: "text", text: "An idea to remember" }],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  };
+  const html = renderToStaticMarkup(
+    <BlogArticle id="abc" document={richPost} />,
+  );
+  assert.match(
+    html,
+    /<h2>A useful section<\/h2>|<h2><span>A useful section<\/span><\/h2>/,
+  );
+  assert.match(html, /<strong>&lt;img/);
+  assert.ok(!html.includes("<img src=x"));
+  assert.match(
+    html,
+    /<a href="\/services" rel="noopener noreferrer"> Our services<\/a>/,
+  );
+  assert.match(html, /<ul><li>/);
+  assert.match(html, /<ol start="3"><li>/);
+  assert.match(html, /<blockquote>/);
+  assert.ok(!html.includes("Fallback should not duplicate content"));
+});

@@ -2981,3 +2981,150 @@
     padding: 12px;
   }
 }
+
+.rich-editor {
+  margin-top: 20px;
+}
+.rich-editor-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.rich-editor-loading {
+  padding: 35px 18px;
+  color: #718577;
+  background: #f7faf5;
+  border: 1px solid #dce5dc;
+  margin-top: 20px;
+}
+.rich-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #dce5dc;
+  background: #f4f8f0;
+  border-radius: 5px 5px 0 0;
+}
+.blog-editor-panel .rich-editor-toolbar select {
+  width: auto;
+  font-size: 11px;
+  padding: 7px 5px;
+  margin-right: 5px;
+  max-width: 125px;
+}
+.rich-editor-toolbar button {
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 32px;
+  flex: 0 0 31px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: #46644d;
+  cursor: pointer;
+}
+.rich-editor-toolbar button:hover {
+  background: #e3eddf;
+}
+.rich-editor-toolbar button[aria-pressed="true"] {
+  color: #165d34;
+  background: #d9e9d3;
+  border-color: #bdd1b5;
+}
+.rich-editor-toolbar button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.rich-editor-toolbar button:focus-visible {
+  outline: 2px solid #4a8057;
+  outline-offset: 1px;
+}
+.rich-editor .tiptap {
+  border: 1px solid #dce5dc;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  padding: 18px;
+  min-height: 200px;
+  background: #fcfdfb;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #294335;
+  overflow-wrap: anywhere;
+}
+.rich-editor .tiptap:focus {
+  border-color: #609572;
+  box-shadow: 0 0 0 2px #c9e4d344;
+}
+.rich-editor .tiptap p {
+  margin: 0 0 14px;
+  color: inherit;
+  line-height: 1.8;
+}
+.rich-editor .tiptap p:last-child {
+  margin-bottom: 0;
+}
+.rich-editor .tiptap h2 {
+  font-size: 23px;
+  margin: 20px 0 12px;
+}
+.rich-editor .tiptap h3 {
+  font-size: 18px;
+  margin: 18px 0 10px;
+}
+.rich-editor .tiptap ul,
+.rich-editor .tiptap ol {
+  padding-left: 24px;
+  margin: 14px 0;
+  list-style: revert;
+}
+.rich-editor .tiptap li {
+  margin: 5px 0;
+}
+.rich-editor .tiptap li p {
+  margin: 0;
+}
+.rich-editor .tiptap blockquote {
+  border-left: 3px solid #81a487;
+  margin: 20px 0;
+  padding: 5px 0 5px 16px;
+  color: #638168;
+}
+.rich-editor .tiptap a {
+  color: #12663c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rich-editor .tiptap code {
+  background: #e7eee3;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 0.9em;
+}
+.rich-editor-link {
+  border-inline: 1px solid #dce5dc;
+  background: #f0f6eb;
+  padding: 15px;
+}
+.blog-editor-panel .rich-editor-link label {
+  margin: 0 0 12px;
+}
+.rich-editor-link > div {
+  display: flex;
+  gap: 8px;
+}
+.rich-editor-link > p {
+  color: #9b4436;
+  margin-bottom: 12px;
+  font-size: 11px;
+}
+.blog-editor-panel .rich-editor-hint {
+  margin-top: 10px;
+}
+.rich-editor-disabled .tiptap {
+  opacity: 0.65;
+}

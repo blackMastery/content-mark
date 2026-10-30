@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- Private blog media is authorized per request. */
 import Link from "next/link";
+import { RichText } from "./rich-text";
 import { ArrowRight, ArrowUpRight, BookOpen } from "lucide-react";
 import {
   blogMediaUrl,
@@ -141,6 +142,8 @@ export function BlogArticle({
         {post.blocks.map((block) => {
           if (block.type === "heading")
             return <h2 key={block.id}>{block.text}</h2>;
+          if (block.type === "text" && block.richText)
+            return <RichText key={block.id} document={block.richText} />;
           if (block.type === "text")
             return (
               <div className="blog-paragraphs" key={block.id}>

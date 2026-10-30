@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { richTextSchema, richTextPlainText } from "./rich-text";
 
 const mediaPath = z
   .string()
@@ -37,6 +38,7 @@ const blockSchema = z.discriminatedUnion("type", [
     id: blockId,
     type: z.literal("text"),
     text: z.string().max(20000),
+    richText: richTextSchema.optional(),
   }),
   z.object({
     id: blockId,
@@ -122,7 +124,11 @@ export const publishableBlogSchema = blogDraftSchema.superRefine(
     for (const block of post.blocks) {
       if (
         (block.type === "text" || block.type === "heading") &&
-        !block.text.trim()
+        !(
+          block.type === "text" && block.richText
+            ? richTextPlainText(block.richText)
+            : block.text
+        ).trim()
       )
         issue("Fill in or remove empty text blocks.");
       if (block.type === "image" && (!block.path || !block.alt.trim()))

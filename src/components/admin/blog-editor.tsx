@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import {
@@ -28,6 +29,16 @@ import {
   type BlogDocument,
 } from "@/lib/blog/schema";
 import type { BlogDraft } from "@/lib/blog/content";
+
+const RichTextEditor = dynamic(
+  () => import("./rich-text-editor").then((module) => module.RichTextEditor),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="rich-editor-loading">Loading text editor…</div>
+    ),
+  },
+);
 
 type UploadProps = {
   postId: string;
@@ -415,18 +426,14 @@ export function BlogEditor({ initial }: { initial: BlogDraft }) {
                     </div>
                   </div>
                   {block.type === "text" ? (
-                    <label>
-                      Paragraph text
-                      <textarea
-                        rows={7}
-                        value={block.text}
-                        maxLength={20000}
-                        placeholder="Start writing. Use a blank line between paragraphs."
-                        onChange={(event) =>
-                          updateBlock(block.id, { text: event.target.value })
-                        }
-                      />
-                    </label>
+                    <RichTextEditor
+                      text={block.text}
+                      document={block.richText}
+                      disabled={busy}
+                      onChange={(text, richText) =>
+                        updateBlock(block.id, { text, richText })
+                      }
+                    />
                   ) : null}
                   {block.type === "heading" ? (
                     <label>
