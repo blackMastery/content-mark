@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { getSiteUrl } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/next";
+import { MetaPixel } from "@/components/layout/meta-pixel";
 
 import "./globals.css";
 const inter = Inter({
@@ -39,6 +40,7 @@ export default function RootLayout({
         </a>
         {children}
         <Analytics />
+        <MetaPixel />
       </body>
     </html>
   );
