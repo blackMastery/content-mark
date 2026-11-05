@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { siteConfiguration } from "../src/lib/site-config";
+import { PRODUCTION_SITE_URL, siteConfiguration } from "../src/lib/site-config";
 import { homeMetadata } from "../src/lib/seo/metadata";
 import {
   siteStructuredData,
@@ -168,4 +168,32 @@ test("structured data follows published edits and cannot break out of its script
     (node) => node["@type"] === "Service",
   );
   assert.equal(service?.name, site.services[0].title);
+});
+
+test("Vercel production defaults to the Content Mark domain; previews and local stay private", () => {
+  const live = siteConfiguration({
+    NODE_ENV: "production",
+    VERCEL_ENV: "production",
+  });
+  assert.equal(PRODUCTION_SITE_URL, "https://www.contentmarkgy.com");
+  assert.equal(live.origin, "https://www.contentmarkgy.com");
+  assert.equal(live.canonicalUrl, "https://www.contentmarkgy.com/");
+  assert.equal(live.indexable, true);
+  assert.equal(
+    siteConfiguration({ NODE_ENV: "production", VERCEL_ENV: "preview" })
+      .indexable,
+    false,
+  );
+  assert.equal(
+    siteConfiguration({ NODE_ENV: "production" }).canonicalUrl,
+    undefined,
+  );
+  assert.equal(
+    siteConfiguration({
+      NEXT_PUBLIC_SITE_URL: "https://agency.example.com",
+      NODE_ENV: "production",
+      VERCEL_ENV: "production",
+    }).origin,
+    "https://agency.example.com",
+  );
 });

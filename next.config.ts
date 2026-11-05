@@ -3,6 +3,17 @@ import { siteConfiguration } from "./src/lib/site-config";
 const config: NextConfig = {
   poweredByHeader: false,
   experimental: { optimizePackageImports: ["lucide-react"] },
+  async redirects() {
+    // Consolidate the apex domain onto the canonical www origin.
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "contentmarkgy.com" }],
+        destination: "https://www.contentmarkgy.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

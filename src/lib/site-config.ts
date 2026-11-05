@@ -5,6 +5,15 @@ type SiteEnvironment = {
   SITE_INDEXING_ENABLED?: string;
 };
 
+/** Canonical public origin used by Vercel production when no override is set. */
+export const PRODUCTION_SITE_URL = "https://www.contentmarkgy.com";
+
+function configuredSiteUrl(env: SiteEnvironment) {
+  const explicit = env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit;
+  return env.VERCEL_ENV === "production" ? PRODUCTION_SITE_URL : undefined;
+}
+
 function siteOrigin(configured?: string) {
   if (!configured?.trim()) return "http://localhost:3000";
   let url: URL;
@@ -29,14 +38,15 @@ function siteOrigin(configured?: string) {
 }
 
 export function siteConfiguration(env: SiteEnvironment = process.env) {
-  const origin = siteOrigin(env.NEXT_PUBLIC_SITE_URL);
+  const siteUrl = configuredSiteUrl(env);
+  const origin = siteOrigin(siteUrl);
   const { hostname, protocol } = new URL(origin);
   const local =
     !hostname.includes(".") ||
     /(^|\.)(localhost|local|test|invalid)$/.test(hostname) ||
     /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname) ||
     hostname.includes(":");
-  const configured = Boolean(env.NEXT_PUBLIC_SITE_URL?.trim());
+  const configured = Boolean(siteUrl);
   if (
     env.SITE_INDEXING_ENABLED &&
     !["true", "false"].includes(env.SITE_INDEXING_ENABLED)
