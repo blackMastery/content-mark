@@ -69,7 +69,12 @@ export async function sendInquiry(
     }),
     signal: AbortSignal.timeout(12_000),
   });
-  if (!response.ok) throw new Error("Email delivery failed.");
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    throw new Error(
+      `Email delivery failed (${response.status}): ${detail.slice(0, 500)}`,
+    );
+  }
   const result = await response.json();
   if (typeof result.id !== "string" || !result.id)
     throw new Error("Email delivery was not confirmed.");

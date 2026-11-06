@@ -21,8 +21,9 @@ export async function receiveInquiry(values: ContactValues) {
     let notification_status = "sent";
     try {
       await sendInquiry(values);
-    } catch {
+    } catch (error) {
       notification_status = "failed";
+      console.error("Inquiry email notification failed:", error);
     }
     // Email is supplementary: a provider outage must never lose a saved lead
     // or invite a duplicate submission by reporting a false inquiry failure.
