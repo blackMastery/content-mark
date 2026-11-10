@@ -6,6 +6,7 @@ import { getPublishedSite } from "@/lib/cms/content";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { siteConfiguration } from "@/lib/site-config";
 import { serializeJsonLd } from "@/lib/seo/structured-data";
+import { blogMediaUrl } from "@/lib/blog/schema";
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
@@ -18,6 +19,15 @@ export async function generateMetadata({ params }: Props) {
     : undefined;
   const title = `${post.document.title} | Content Mark`;
   const description = post.document.excerpt;
+  const { cover, coverAlt } = post.document;
+  const images = cover
+    ? [
+        {
+          url: `${siteConfiguration().origin}${blogMediaUrl(post.id, cover)}`,
+          alt: coverAlt || post.document.title,
+        },
+      ]
+    : base.openGraph.images;
   return {
     ...base,
     title,
@@ -32,8 +42,9 @@ export async function generateMetadata({ params }: Props) {
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       authors: ["Content Mark"],
+      images,
     },
-    twitter: { ...base.twitter, title, description },
+    twitter: { ...base.twitter, title, description, images },
   };
 }
 export default async function ArticlePage({ params }: Props) {
